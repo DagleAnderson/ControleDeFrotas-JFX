@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MainViewController">
+   <content>
+      <VBox prefHeight="261.0" prefWidth="471.0">
+         <children>
+            <MenuBar>
+              <menus>
+                <Menu mnemonicParsing="false" text="Cadastro">
+                  <items>
+                        <MenuItem mnemonicParsing="false" text="Empresa" />
+                        <MenuItem fx:id="menuItemMotorista" mnemonicParsing="false" onAction="#onMenuItemMotoristaAction" text="Motorista" />
+                    <MenuItem fx:id="menuItemVeiculo" mnemonicParsing="false" onAction="#onMenuItemVeiculoAction" text="Veículo" />
+                        <MenuItem fx:id="menuItemMarca" mnemonicParsing="false" onAction="#onMenuItemMarcaAction" text="Marca" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Viagem">
+                     <items>
+                        <MenuItem fx:id="menuItemGViagens" mnemonicParsing="false" onAction="#onMenuItemViagensAction" text="Gerenciar Viagem" />
+                     </items></Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem fx:id="menuItemSobre" mnemonicParsing="false" onAction="#onMenuItemSobreAction" text="Sobre" />
+                     </items></Menu>
+                <Menu mnemonicParsing="false" text="Sair">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </children>
+      </VBox>
+   </content>
+</ScrollPane>
