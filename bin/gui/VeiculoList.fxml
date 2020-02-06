@@ -29,7 +29,7 @@
       </TableView>
       <ButtonBar prefHeight="43.0" prefWidth="536.0" style="-fx-background-color: #40E0D0;">
         <buttons>
-            <Button fx:id="btnIncluir" mnemonicParsing="false" onAction="#onBtnIncluirAction" text="Incluir" />
+            <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" text="Novo" />
           <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#onBtnEditarAction" text="Editar" />
             <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#onBtnExcluirAction" text="Excluir" />
             <Button fx:id="btnSair" mnemonicParsing="false" onAction="#onBtnSairAction" text="Sair" />

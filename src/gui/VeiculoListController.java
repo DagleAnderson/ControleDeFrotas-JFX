@@ -1,17 +1,28 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
+import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.entities.Veiculo;
 import model.services.VeiculoService;
 
@@ -42,7 +53,7 @@ public class VeiculoListController implements Initializable {
 	// Referencias de Botões
 	
 	@FXML
-	private Button btnIncluir;
+	private Button btnNovo;
 	
 	@FXML
 	private Button btnEditar;
@@ -58,8 +69,9 @@ public class VeiculoListController implements Initializable {
 	
 	//Métidos Action
 	@FXML
-	public void onBtnIncluirAction() {
-		System.out.println("Incluir");
+	public void onBtnNovoAction( ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		createDialogForm("/gui/VeiculoForm.fxml", parentStage);
 	}
 	
 	@FXML
@@ -78,7 +90,6 @@ public class VeiculoListController implements Initializable {
 	}
 	
 	//injeção de dependencia
-	
 	public void setVeiculoService( VeiculoService service) {
 		this.service = service;
 	}
@@ -102,6 +113,24 @@ public class VeiculoListController implements Initializable {
 			
 			tableViewVeiculo.setItems(obsList);
 		
+	}
+	
+	private void createDialogForm(String absoluteName,Stage parentStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane  = loader.load();
+			
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Dados de Veiculo");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+			
+		}catch(IOException e) {
+			Alerts.showAlert("IOExeption", "Erro loading View", e.getMessage(), AlertType.ERROR );
+		}
 	}
 	
 	
