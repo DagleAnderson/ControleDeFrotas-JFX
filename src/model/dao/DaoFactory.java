@@ -6,7 +6,7 @@ import java.sql.Connection;
 import db.DB;
 import modal.dao.imp.VeiculoDaoJDBC;
 
-public class DaoFactory {
+public class DaoFactory { // Fábrica de instanciação DAO
 
 	private static final Connection conn = DB.getConnection();
 

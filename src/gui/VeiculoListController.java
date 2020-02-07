@@ -64,10 +64,11 @@ public class VeiculoListController implements Initializable {
 	@FXML
 	private Button btnSair;
 	
+	//Lista de dados do javaFX
 	private ObservableList<Veiculo> obsList;
 	
 	
-	//Métidos Action
+	//Métodos Action
 	@FXML
 	public void onBtnNovoAction( ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
@@ -96,13 +97,15 @@ public class VeiculoListController implements Initializable {
 	
 	
 	private void InicializeNodes() {
+		//Inicialização das colunas da tabela 
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
 		tableColumnDesc.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 		tableColumnPlaca.setCellValueFactory(new PropertyValueFactory<>("placa"));
 		tableColumnRenavam.setCellValueFactory(new PropertyValueFactory<>("renavam"));
 		tableColumnMod.setCellValueFactory(new PropertyValueFactory<>("modelo"));
 	}
-
+	
+	//atualizador de dados do banco para a View
 	public void updateTableView() {
 		if(service == null) {
 			throw new IllegalStateException("Service was null");
@@ -115,18 +118,21 @@ public class VeiculoListController implements Initializable {
 		
 	}
 	
-	private void createDialogForm(String absoluteName,Stage parentStage) {
+	private void createDialogForm(String absoluteName,Stage parentStage /*stage pai*/ ) {
 		try {
+			
+			//FXMLLoader é classe principal do JavaFX para carregar um novo form.fxml
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+			//Tipo Ancorpane
 			Pane pane  = loader.load();
 			
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Dados de Veiculo");
-			dialogStage.setScene(new Scene(pane));
-			dialogStage.setResizable(false);
-			dialogStage.initOwner(parentStage);
-			dialogStage.initModality(Modality.WINDOW_MODAL);
-			dialogStage.showAndWait();
+			Stage dialogStage = new Stage(); //Novo Palco 
+			dialogStage.setTitle("Dados de Veiculo"); //titulo da Stage
+			dialogStage.setScene(new Scene(pane)); //Nova cena  passando o palco como parâmetro
+			dialogStage.setResizable(false); //bloquear redimensionamento
+			dialogStage.initOwner(parentStage); // Stage Pai que da origem ao Stage que será chamado
+			dialogStage.initModality(Modality.WINDOW_MODAL); //Model - Enquanto  janela estiver aberta a inferir estará inacessível
+			dialogStage.showAndWait(); // carregar form na tela
 			
 		}catch(IOException e) {
 			Alerts.showAlert("IOExeption", "Erro loading View", e.getMessage(), AlertType.ERROR );
@@ -134,7 +140,7 @@ public class VeiculoListController implements Initializable {
 	}
 	
 	
-	@Override
+	@Override //funciona com uma especie de construtor para inicialização de nodes no javaFX
 	public void initialize(URL uri, ResourceBundle rb) {
 		InicializeNodes();
 		
