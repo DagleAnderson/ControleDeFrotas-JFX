@@ -9,16 +9,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="343.0" prefWidth="536.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VeiculoListController">
+<VBox prefHeight="365.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.VeiculoListController">
    <children>
-      <Label prefHeight="20.0" prefWidth="550.0" style="-fx-background-color: #ddd;" text="Veículo de Transporte">
+      <Label prefHeight="20.0" prefWidth="645.0" style="-fx-background-color: #ddd;" text="Veículo de Transporte">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label text="Pesquisar" />
+      <Label text="Pesquisar">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
       <TextField prefHeight="25.0" prefWidth="449.0" />
-      <TableView fx:id="tableViewVeiculo" prefHeight="225.0" prefWidth="536.0">
+      <TableView fx:id="tableViewVeiculo" prefHeight="244.0" prefWidth="645.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Código" />
           <TableColumn fx:id="tableColumnDesc" prefWidth="75.0" text="Descrição" />
@@ -27,12 +30,24 @@
             <TableColumn fx:id="tableColumnMod" prefWidth="75.0" text="Modelo" />
         </columns>
       </TableView>
-      <ButtonBar prefHeight="43.0" prefWidth="536.0" style="-fx-background-color: #40E0D0;">
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #40E0D0;">
         <buttons>
-            <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" text="Novo" />
-          <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#onBtnEditarAction" text="Editar" />
-            <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#onBtnExcluirAction" text="Excluir" />
-            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#onBtnSairAction" text="Sair" />
+            <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+          <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#onBtnEditarAction" style="-fx-background-radius: 10px;" text="Editar" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#onBtnExcluirAction" style="-fx-background-radius: 10px;" text="Excluir" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="btnSair" mnemonicParsing="false" onAction="#onBtnSairAction" style="-fx-background-radius: 10px;" text="Sair" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
         </buttons>
       </ButtonBar>
    </children>
