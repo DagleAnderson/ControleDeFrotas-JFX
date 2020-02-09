@@ -31,6 +31,7 @@ public class VeiculoListController implements Initializable {
 	
 	private VeiculoService service;
 	
+	
 	//Referencias de Tabelas e Colunas 
 	@FXML
 	private TableView<Veiculo> tableViewVeiculo;
@@ -68,11 +69,13 @@ public class VeiculoListController implements Initializable {
 	private ObservableList<Veiculo> obsList;
 	
 	
+	
 	//Métodos Action
 	@FXML
 	public void onBtnNovoAction( ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/VeiculoForm.fxml", parentStage);
+		Veiculo obj = new Veiculo();
+		createDialogForm(obj, "/gui/VeiculoForm.fxml", parentStage);
 	}
 	
 	@FXML
@@ -118,13 +121,18 @@ public class VeiculoListController implements Initializable {
 		
 	}
 	
-	private void createDialogForm(String absoluteName,Stage parentStage /*stage pai*/ ) {
+	private void createDialogForm(Veiculo obj,String absoluteName,Stage parentStage /*stage pai*/ ) {
 		try {
 			
 			//FXMLLoader é classe principal do JavaFX para carregar um novo form.fxml
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			//Tipo Ancorpane
 			Pane pane  = loader.load();
+			
+			//pega o controlador do form que irá sofrer a injeção
+			VeiculoFormController controller = loader.getController();
+			controller.setVeiculo(obj);
+			//controller.updateFormData();
 			
 			Stage dialogStage = new Stage(); //Novo Palco 
 			dialogStage.setTitle("Dados de Veiculo"); //titulo da Stage
@@ -145,6 +153,7 @@ public class VeiculoListController implements Initializable {
 		InicializeNodes();
 		
 	}
+
 
 	
 }
