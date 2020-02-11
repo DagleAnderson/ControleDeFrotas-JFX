@@ -65,5 +65,9 @@ public class Modelo implements Serializable{
 		this.marca = marca;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return this.descricao;
+	}
 }

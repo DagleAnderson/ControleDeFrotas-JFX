@@ -132,6 +132,7 @@ public class VeiculoListController implements Initializable {
 			//pega o controlador do form que irá sofrer a injeção
 			VeiculoFormController controller = loader.getController();
 			controller.setVeiculo(obj);
+			controller.setVeiculoService(new VeiculoService());
 			//controller.updateFormData();
 			
 			Stage dialogStage = new Stage(); //Novo Palco 

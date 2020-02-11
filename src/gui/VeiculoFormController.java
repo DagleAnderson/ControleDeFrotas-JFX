@@ -1,19 +1,21 @@
 package gui;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
 import gui.util.Constraints;
+import gui.util.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import model.entities.Marca;
 import model.entities.Modelo;
 import model.entities.Veiculo;
+import model.services.VeiculoService;
 
 public class VeiculoFormController implements Initializable {
 	
@@ -21,7 +23,7 @@ public class VeiculoFormController implements Initializable {
 	
 	private Veiculo entity;
 	
-	//private VeiculoService service;
+	private VeiculoService service;
 	
 // Injeções de Dependência	
 	
@@ -57,14 +59,16 @@ public class VeiculoFormController implements Initializable {
 	
 		
 //métodos de injeção
-
+		
+		//recebe obj do parent pane
 		public void setVeiculo(Veiculo veic) {
 			this.entity = veic;
 		}
 
-		/*public void setVeiculoService(VeiculoService servico) {
+		//recebe service do parent pane
+		public void setVeiculoService(VeiculoService servico) {
 			this.service = servico;
-		}*/
+		}
 		
 //métodos de injeção
 		
@@ -75,9 +79,24 @@ public class VeiculoFormController implements Initializable {
 		
 		@FXML
 		public void onBtnGravarAction() {
-			System.out.println("gravar");
+			entity  = getFormData();
+			service.saveOrUpdate(entity);
 		}
 		
+		//pega dados do Form 
+		private Veiculo getFormData() {
+			Veiculo obj = new Veiculo();
+			obj.setId(Utils.tryParseToInt(txtId.getText()));
+			obj.setDescricao(txtDescricao.getText());
+			obj.setModelo(new Modelo(1,"Truck",new Marca(1,"Wolksvagem"))/*ação temporária*/);
+			obj.setAno(txtAno.getText());
+			obj.setChassi(txtChassi.getText());
+			obj.setKmRodado(Utils.tryParseToDouble(txtKmRodado.getText()));
+			obj.setRenavam(txtRenavam.getText());
+			obj.setPlaca(txtPlaca.getText());
+			
+			return obj;
+		}
 
 		@FXML
 		public void onBtnCancelarAction() {

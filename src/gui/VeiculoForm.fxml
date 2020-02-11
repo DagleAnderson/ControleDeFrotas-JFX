@@ -51,7 +51,7 @@
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <TextField fx:id="txtMarca" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtMarca" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <TextField fx:id="txtAno" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="3" />
                   <ComboBox fx:id="comboModelo" editable="true" prefHeight="25.0" prefWidth="211.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Button fx:id="btnAddModelo" mnemonicParsing="false" onAction="#onBtnAddModelo" prefHeight="25.0" prefWidth="43.0" style="-fx-background-radius: 10px;" text="+" textAlignment="CENTER" textFill="#0ac20c" translateX="3.0" GridPane.columnIndex="4" GridPane.rowIndex="1">

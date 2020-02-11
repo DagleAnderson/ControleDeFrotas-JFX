@@ -34,7 +34,7 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 				 st = conn.prepareStatement(
 						 " INSERT INTO veiculo "  
 				 		+"(descricao_veic,ano_veic,km_rodado_veic,placa_veic,chassi_veic,renavam_veic,modelo_id) "  
-				 		+" VALUES(?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+				 		+" VALUES(?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 				 
 				 		st.setString(1, obj.getDescricao());
 				 		st.setString(2,obj.getAno());
@@ -42,7 +42,7 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 				 		st.setString(4, obj.getPlaca());
 				 		st.setString(5, obj.getChassi());
 				 		st.setString(6, obj.getRenavam());
-				 		st.setInt(7, obj.getModelo().getId());
+				 		st.setInt(7, 1);
 				 		
 				 int rowsAffected = st.executeUpdate();
 				 	

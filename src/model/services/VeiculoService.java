@@ -14,7 +14,7 @@ public class VeiculoService {
 
 		return veicDao.findAll();
 	}
-	
+		
 	public void saveOrUpdate(Veiculo obj){
 		if(obj.getId() == null) {
 			veicDao.insert(obj);
