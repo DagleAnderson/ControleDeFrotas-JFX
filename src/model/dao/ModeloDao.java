@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.entities.Modelo;
 
-public interface modeloDao {
+public interface ModeloDao {
 
 	void insert(Modelo obj);
 	void update(Modelo obj);

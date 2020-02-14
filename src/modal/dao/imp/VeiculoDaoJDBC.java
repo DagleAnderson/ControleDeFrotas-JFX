@@ -25,6 +25,7 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	public VeiculoDaoJDBC(Connection conection){
 		this.conn = conection;
 	}
+	
 	@Override
 	public void insert(Veiculo obj) {
 		 PreparedStatement st = null;
