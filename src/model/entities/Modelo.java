@@ -68,6 +68,6 @@ public class Modelo implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.descricao;
+		return getDescricao();
 	}
 }

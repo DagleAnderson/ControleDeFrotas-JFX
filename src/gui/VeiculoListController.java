@@ -28,7 +28,7 @@ import model.services.VeiculoService;
 
 public class VeiculoListController implements Initializable {
 	
-	
+	//Injeção de dependências
 	private VeiculoService service;
 	
 	

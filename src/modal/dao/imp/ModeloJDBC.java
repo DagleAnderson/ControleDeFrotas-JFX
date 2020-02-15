@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DBException;
 import model.dao.ModeloDao;
+import model.entities.Marca;
 import model.entities.Modelo;
 
 public class ModeloJDBC implements ModeloDao{
@@ -50,12 +53,22 @@ public class ModeloJDBC implements ModeloDao{
 			PreparedStatement st = null;
 			ResultSet rs = null;
 		try {	
-				st  = conn.prepareStatement("SELECT * FROM modelo");
+				st  = conn.prepareStatement("SELECT modelo.* ,marca.nome_marca as marca FROM modelo" +
+						" INNER JOIN marca ON modelo.marca_id = marca.id_marca");
+					
 				rs = st.executeQuery();
 				
 				List<Modelo> modeloList = new ArrayList<>();
+				
+				Map<String,Marca> mapMarca = new HashMap<>();
 				while(rs.next()) {
-					Modelo mod = instantiateModelo(rs);
+					Marca marca =  mapMarca.get(rs.getString("marca"));
+					if(marca == null) {
+						marca = instantiateMarca(rs);
+						mapMarca.put(rs.getString("marca"), marca);
+						
+					}
+					Modelo mod = instantiateModelo(rs,marca);
 					
 					modeloList.add(mod);
 				}
@@ -67,13 +80,26 @@ public class ModeloJDBC implements ModeloDao{
 		}
 	}
 
-	private Modelo instantiateModelo(ResultSet rs) {
+	private Marca instantiateMarca(ResultSet rs) {
+		try {
+			Marca marca = new Marca();
+			marca.setDescricao(rs.getString("marca"));
+			return marca;
+		}catch(SQLException e) {
+			throw new DBException(e.getMessage());
+		}
+		
+	}
+
+	private Modelo instantiateModelo(ResultSet rs,Marca ResultMarca) {
 		try {
 			Modelo modelo = new Modelo();
-			modelo.setId(rs.getInt("id"));
-			modelo.setDescricao(rs.getString("descricao"));
+			modelo.setId(rs.getInt("id_mod"));
+			modelo.setDescricao(rs.getString("nome_mod"));
+			modelo.setMarca(ResultMarca);
 			
 			return modelo;
+			
 		}catch(SQLException e) {
 			throw new DBException(e.getMessage());
 		}

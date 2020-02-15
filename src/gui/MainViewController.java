@@ -16,6 +16,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
+import model.services.ModeloService;
 import model.services.VeiculoService;
 
 public class MainViewController implements Initializable {
@@ -50,6 +51,10 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemModeloAction() {
+		LoadView("/gui/ModeloList.fxml",(ModeloListController controller)->{
+			controller.setModeloService(new ModeloService());
+			controller.updateTableView();
+		});
 	}
 	
 	@FXML

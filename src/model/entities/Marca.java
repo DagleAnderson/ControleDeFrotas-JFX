@@ -56,5 +56,10 @@ public class Marca  implements Serializable{
 		this.descricao = descricao;
 	}
 	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return getDescricao();
+	}
 	
 }

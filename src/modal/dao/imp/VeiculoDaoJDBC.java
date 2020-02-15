@@ -204,7 +204,7 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 			
 			List<Veiculo> listVeic = new ArrayList<>();
 			
-			//Verificação de existência de duas instancias do mesmo obj
+			//Verificação de existência de duas instâncias do mesmo obj
 			Map<String,Marca> mapMarca = new HashMap<>();
 			Map<Integer,Modelo> mapMod = new HashMap<>();
 				while(rs.next()){
