@@ -62,7 +62,7 @@
             </GridPane>
          </children>
       </Pane>
-      <ButtonBar layoutX="-6.0" layoutY="344.0" prefHeight="54.0" prefWidth="663.0" style="-fx-background-color: #40E0D0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="344.0">
+      <ButtonBar layoutX="-6.0" layoutY="344.0" prefHeight="54.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="344.0">
         <buttons>
           <Button fx:id="btnGravar" mnemonicParsing="false" onAction="#onBtnGravarAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Gravar" translateX="-30.0">
                <font>

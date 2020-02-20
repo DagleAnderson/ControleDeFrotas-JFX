@@ -10,7 +10,7 @@
    <content>
       <VBox prefHeight="261.0" prefWidth="471.0">
          <children>
-            <MenuBar prefHeight="28.0" prefWidth="471.0" style="-fx-background-color: #40E0D0;">
+            <MenuBar prefHeight="28.0" prefWidth="471.0" style="-fx-background-color: #4dcb99;">
               <menus>
                 <Menu mnemonicParsing="false" text="Cadastro">
                   <items>

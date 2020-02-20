@@ -30,7 +30,7 @@
             <TableColumn fx:id="tableColumnMod" prefWidth="143.0" text="Modelo" />
         </columns>
       </TableView>
-      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #40E0D0;">
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;">
         <buttons>
             <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
                <font>

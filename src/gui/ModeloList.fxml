@@ -28,7 +28,7 @@
             <TableColumn fx:id="tableColumnMarca" prefWidth="75.0" text="Marca" />
         </columns>
       </TableView>
-      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #40E0D0;">
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;">
         <buttons>
           <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#OnBtnNovoAction" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
                <font>
