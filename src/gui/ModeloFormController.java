@@ -8,7 +8,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import model.entities.Marca;
 import model.entities.Modelo;
 import model.services.ModeloService;
 
@@ -25,13 +27,16 @@ public class ModeloFormController implements Initializable {
 	@FXML
 	private TextField txtDesc;
 	@FXML
+	private ComboBox<Marca> cbxMarca;
+	@FXML
+	private Button btnAddMarca;
+	@FXML
 	private Button btnGravar;
 	@FXML
 	private Button btnCancelar;
 	
 	
-	
-	
+	//Injeção de dependência ************
 	public void setModelo(Modelo modelo) {
 		this.entity = modelo;
 	}
@@ -40,7 +45,11 @@ public class ModeloFormController implements Initializable {
 		this.service = modService;
 	}
 	
-
+	//***********************************
+	
+	public void onBtnAddMarcaAction() {
+		//add Marca
+	}
 	
 	public void onBtnGravarAction(ActionEvent event) {
 		this.entity = getFormData();

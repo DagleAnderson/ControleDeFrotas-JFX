@@ -15,12 +15,12 @@ import model.dao.ModeloDao;
 import model.entities.Marca;
 import model.entities.Modelo;
 
-public class ModeloJDBC implements ModeloDao{
+public class ModeloDaoJDBC implements ModeloDao{
 	
 	Connection conn;
 	
 	
-	public ModeloJDBC( Connection connection) {
+	public ModeloDaoJDBC( Connection connection) {
 		this.conn = connection;
 	}
 
