@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Modelo implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private Integer id;
 	private String descricao;
 	private Marca marca;
 	
@@ -13,7 +13,7 @@ public class Modelo implements Serializable{
 		
 	}
 	
-	public Modelo(int id, String desc, Marca marca){
+	public Modelo(Integer id, String desc, Marca marca){
 		this.id = id;
 		this.descricao = desc;
 		this.marca = marca;
@@ -41,11 +41,11 @@ public class Modelo implements Serializable{
 		return true;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

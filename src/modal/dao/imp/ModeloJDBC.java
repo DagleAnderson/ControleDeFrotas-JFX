@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,33 @@ public class ModeloJDBC implements ModeloDao{
 
 	@Override
 	public void insert(Modelo obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+		st = conn.prepareStatement("INSERT INTO modelo "+
+		"(nome_mod,marca_id) "+
+				"VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
+		
+		st.setString(1, obj.getDescricao());
+		st.setInt(2, 1);
+		
+		 int rowsAffected = st.executeUpdate();
+		 	
+		 	if(rowsAffected > 0 ) {
+		 		rs = st.getGeneratedKeys();
+		 	if(rs.next()) {
+		 			int id = rs.getInt(1);
+		 			
+		 			obj.setId(id);
+		 		}
+		 	}else {
+		 		throw new DBException("Erro inesperado! Nenhum linha foi afetada");
+		 	}
+	
+		}catch(SQLException e) {
+			throw new DBException(e.getMessage()); 
+		}
+		
 		
 	}
 

@@ -66,8 +66,8 @@ public class ModeloListController implements Initializable{
 		@FXML 
 		public void OnBtnNovoAction(ActionEvent event) {
 			Stage parentStage = Utils.currentStage(event);
-			Modelo modelo = new Modelo();
-			createDialogForm(modelo, "/gui/ModeloForm.fxml", parentStage);
+			Modelo obj = new Modelo();
+			createDialogForm(obj,"/gui/ModeloForm.fxml", parentStage);
 		}
 		
 		@FXML 
@@ -87,15 +87,22 @@ public class ModeloListController implements Initializable{
 		
 		public void createDialogForm(Modelo obj,String absoluteName, Stage parentStage){
 			try {
+				//FXMLLoader é classe principal do JavaFX para carregar um novo form.fxml
 				FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+				//Tipo Ancorpane
 				Pane pane = loader.load();
 				
-				Stage dialogStage = new Stage();
-				dialogStage.setTitle("Dados de Modelo");
-				dialogStage.setScene(new Scene(pane));
-				dialogStage.setResizable(false);
-				dialogStage.initOwner(parentStage);
-				dialogStage.initModality(Modality.WINDOW_MODAL);
+				//pega o controlador do form que irá sofrer a injeção
+				ModeloFormController controller = loader.getController();
+				controller.setModelo(obj);
+				controller.setModeloService(new ModeloService());
+				
+				Stage dialogStage = new Stage();//Novo Palco 
+				dialogStage.setTitle("Dados de Modelo");//titulo da Stage
+				dialogStage.setScene(new Scene(pane));//Nova cena  passando o palco como parâmetro
+				dialogStage.setResizable(false);//bloquear redimensionamento
+				dialogStage.initOwner(parentStage); // Stage Pai que da origem ao Stage que será chamado
+				dialogStage.initModality(Modality.WINDOW_MODAL);//Model - Enquanto  janela estiver aberta a inferir estará inacessível
 				dialogStage.showAndWait(); // carregar form na tela
 				
 				
