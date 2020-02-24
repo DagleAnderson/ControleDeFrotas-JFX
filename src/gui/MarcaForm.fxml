@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="262.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModeloFormController">
+<AnchorPane prefHeight="262.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MarcaFormController">
    <children>
       <ButtonBar layoutX="1.0" layoutY="222.0" prefHeight="40.0" prefWidth="485.0" style="-fx-background-color: #4dcb99;">
         <buttons>

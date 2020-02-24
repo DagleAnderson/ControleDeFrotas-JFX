@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import db.DB;
 import db.DBException;
 import model.dao.ModeloDao;
 import model.entities.Marca;
@@ -29,9 +30,9 @@ public class ModeloDaoJDBC implements ModeloDao{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-		st = conn.prepareStatement("INSERT INTO modelo "+
-		"(nome_mod,marca_id) "+
-				"VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
+			st = conn.prepareStatement("INSERT INTO modelo "+
+					"(nome_mod,marca_id) "+
+					"VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
 		
 		st.setString(1, obj.getDescricao());
 		st.setInt(2, 1);
@@ -51,9 +52,11 @@ public class ModeloDaoJDBC implements ModeloDao{
 	
 		}catch(SQLException e) {
 			throw new DBException(e.getMessage()); 
-		}
 		
-		
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);	
+		}	
 	}
 
 	@Override

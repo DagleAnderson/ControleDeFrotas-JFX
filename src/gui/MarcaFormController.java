@@ -19,11 +19,11 @@ public class MarcaFormController {
 		
 	
 	public void onBtnGravarAction() {
-		
+		System.out.println("gravando no bando de dados");
 	}	
 	
 	public void onBtnCancelarAction() {
-		
+		System.out.println("cancelado");
 	}
 	
 	

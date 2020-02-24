@@ -21,7 +21,7 @@
          </font>
       </Label>
       <TextField fx:id="txtPesquisar" />
-      <TableView fx:id="tableViewModelo" prefHeight="244.0" prefWidth="645.0">
+      <TableView fx:id="tableViewMarca" prefHeight="244.0" prefWidth="645.0">
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Código" />
           <TableColumn fx:id="tableColumnDesc" prefWidth="322.0" text="Descrição" />

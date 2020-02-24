@@ -2,7 +2,14 @@ package modal.dao.imp;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
+import db.DB;
+import db.DBException;
 import model.dao.MarcaDao;
 import model.entities.Marca;
 
@@ -16,6 +23,34 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void insert(Marca obj) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("INSERT INTO marca(nome_marca) "+
+					"VALUES(?)",Statement.RETURN_GENERATED_KEYS);
+			
+			st.setString(1,obj.getDescricao());	
+			
+			int rowsAffected = st.executeUpdate();
+			
+			if(rowsAffected > 0) {
+				rs = st.getGeneratedKeys();
+				
+				if(rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				
+			}else {
+				throw new DBException("Erro inesperado! Nenhum linha foi afetada");
+			}
+				
+		}catch(SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -39,8 +74,42 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public List<Marca> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM marca");
+			rs = st.executeQuery();
+			
+			List<Marca> marcaList = new ArrayList<>();
+			
+			while(rs.next()){
+				 Marca marca = instantiateMarca(rs);
+				 
+				 marcaList.add(marca);
+			}
+			
+			return marcaList;
+			
+		}catch(SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
+	
+	}
+
+	private Marca instantiateMarca(ResultSet rs) {
+		try {
+			Marca marca = new Marca();
+			marca.setId(rs.getInt("id_marca"));
+			marca.setDescricao(rs.getString("nome_marca"));
+			
+			return marca;
+			
+		}catch(SQLException e){
+			throw new DBException(e.getMessage());
+		}
 	}
 
 }

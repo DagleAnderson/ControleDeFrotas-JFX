@@ -1,7 +1,10 @@
 package model.services;
 
+import java.util.List;
+
 import model.dao.DaoFactory;
 import model.dao.MarcaDao;
+import model.entities.Marca;
 
 public class MarcaService {
 	
@@ -9,5 +12,9 @@ public class MarcaService {
 	
 	public void saveOrupdate() {
 		
+	}
+	
+	public List<Marca> findAll(){
+		return dao.findAll();
 	}
 }

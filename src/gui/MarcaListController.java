@@ -2,11 +2,14 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
 import gui.util.Alerts;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Marca;
+import model.entities.Modelo;
 import model.services.MarcaService;
 
 public class MarcaListController implements Initializable {
@@ -36,7 +40,7 @@ public class MarcaListController implements Initializable {
 		private TextField txtPesquisar;
 		//Table View
 			@FXML
-			private TableView<Marca> tableViewModelo;
+			private TableView<Marca> tableViewMarca;
 			@FXML
 			private TableColumn<Marca, Integer> tableColumnId;
 			@FXML
@@ -51,13 +55,17 @@ public class MarcaListController implements Initializable {
 			private Button btnExcuir;
 			@FXML
 			private Button btnSair;
+	
+	//List Observable
+		
+			private ObservableList<Marca> obsList;
 			
     // Métodos de injeção de dependência ****************** 
 	public void setMarca(Marca obj) {
 		this.marca = obj;
 	}
 	
-	public void serMarcaService(MarcaService marcaService) {
+	public void setMarcaService(MarcaService marcaService) {
 		this.service = marcaService;
 	}
 	//*****************************************************
@@ -79,6 +87,19 @@ public class MarcaListController implements Initializable {
 	public void onBtnSairAction() {
 		System.out.println("Sair");
 	}
+	
+	//atualizador de dados do banco para a View
+			public void updateTableView() {
+				if(service == null) {
+					throw new IllegalStateException("Service was null");
+				}
+				
+				List<Marca> list  = service.findAll();
+					obsList = FXCollections.observableArrayList(list);
+					
+					tableViewMarca.setItems(obsList);
+				
+			}
 	
 	public void InitializeNodes() {
 		//Inicialização das colunas da tabela 
