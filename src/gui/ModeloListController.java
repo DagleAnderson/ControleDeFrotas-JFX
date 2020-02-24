@@ -64,24 +64,25 @@ public class ModeloListController implements Initializable{
 		}
 
 		@FXML 
-		public void OnBtnNovoAction(ActionEvent event) {
+		public void onBtnNovoAction(ActionEvent event) {
+			//Método currentStage Pega o palco pai para passar como parâmetro nas telas de diálogo
 			Stage parentStage = Utils.currentStage(event);
 			Modelo obj = new Modelo();
 			createDialogForm(obj,"/gui/ModeloForm.fxml", parentStage);
 		}
 		
 		@FXML 
-		public void OnBtnEditarAction() {
+		public void onBtnEditarAction() {
 			System.out.println("editar Modelo");
 		}
 		
 		@FXML 
-		public void OnBtnExcluirAction() {
+		public void onBtnExcluirAction() {
 			System.out.println("excluir Modelo");
 		}
 		
 		@FXML 
-		public void OnBtnSairAction() {
+		public void onBtnSairAction() {
 			System.out.println("sair Modelo");
 		}
 		

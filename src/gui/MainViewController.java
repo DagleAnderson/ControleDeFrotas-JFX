@@ -27,6 +27,8 @@ public class MainViewController implements Initializable {
 	private MenuItem menuItemVeiculo;
 	@FXML
 	private MenuItem menuItemModelo;
+	@FXML
+	private MenuItem menuItemMarca;
 	
 	@FXML
 	private MenuItem menuItemGViagens;
@@ -55,6 +57,10 @@ public class MainViewController implements Initializable {
 			controller.setModeloService(new ModeloService());
 			controller.updateTableView();
 		});
+	}
+	
+	public void onMenuItemMarcaAction() {
+		LoadView("/gui/MarcaList.fxml",f->{});
 	}
 	
 	@FXML

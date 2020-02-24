@@ -48,10 +48,10 @@ public class ModeloFormController implements Initializable {
 	//***********************************
 	
 	public void onBtnAddMarcaAction() {
-		//add Marca
+		
 	}
 	
-	public void onBtnGravarAction(ActionEvent event) {
+	public void onBtnGravarAction() {
 		this.entity = getFormData();
 		service.SaveOrUpdate(entity);
 	}

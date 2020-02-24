@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="365.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModeloListController">
+<VBox prefHeight="365.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MarcaListController">
    <children>
-      <Label prefHeight="17.0" prefWidth="649.0" style="-fx-background-color: #ddd;" text="Modelo de Transporte">
+      <Label prefHeight="17.0" prefWidth="649.0" style="-fx-background-color: #ddd;" text="Marca de Transporte">
          <font>
             <Font name="System Bold" size="14.0" />
          </font></Label>
@@ -25,7 +25,6 @@
         <columns>
           <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Código" />
           <TableColumn fx:id="tableColumnDesc" prefWidth="322.0" text="Descrição" />
-            <TableColumn fx:id="tableColumnMarca" prefWidth="75.0" text="Marca" />
         </columns>
       </TableView>
       <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;">

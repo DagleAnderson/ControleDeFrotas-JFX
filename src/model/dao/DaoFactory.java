@@ -4,6 +4,7 @@ package model.dao;
 import java.sql.Connection;
 
 import db.DB;
+import modal.dao.imp.MarcaDaoJDBC;
 import modal.dao.imp.ModeloDaoJDBC;
 import modal.dao.imp.VeiculoDaoJDBC;
 
@@ -18,5 +19,9 @@ public class DaoFactory { // Fábrica de instanciação DAO
 	
 	public static ModeloDao createModeloDao() {
 		return new ModeloDaoJDBC(conn);
+	}
+	
+	public static MarcaDao createMarcaDao() {
+		return new MarcaDaoJDBC(conn);
 	}
 }
