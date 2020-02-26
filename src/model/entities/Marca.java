@@ -6,7 +6,7 @@ public class Marca  implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private int id;
+	private Integer id;
 	private  String descricao;
 	
 	public Marca() {
@@ -40,11 +40,11 @@ public class Marca  implements Serializable{
 		return true;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

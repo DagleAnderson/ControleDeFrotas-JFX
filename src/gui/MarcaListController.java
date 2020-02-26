@@ -25,13 +25,11 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Marca;
-import model.entities.Modelo;
 import model.services.MarcaService;
 
 public class MarcaListController implements Initializable {
 	
 	//injeção de dependência
-		private Marca marca;
 		private MarcaService service;
 	
 	
@@ -61,9 +59,6 @@ public class MarcaListController implements Initializable {
 			private ObservableList<Marca> obsList;
 			
     // Métodos de injeção de dependência ****************** 
-	public void setMarca(Marca obj) {
-		this.marca = obj;
-	}
 	
 	public void setMarcaService(MarcaService marcaService) {
 		this.service = marcaService;
@@ -111,7 +106,10 @@ public class MarcaListController implements Initializable {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane = loader.load();
-
+				
+				MarcaFormController controller = loader.getController();
+				controller.setMarca(obj);
+				controller.setMarcaService(new MarcaService());
 						
 				Stage dialogForm = new Stage();
 				dialogForm.setTitle("Dados de Marca");

@@ -69,6 +69,10 @@ public class VeiculoListController implements Initializable {
 	private ObservableList<Veiculo> obsList;
 	
 	
+	//injeção de dependencia
+	public void setVeiculoService( VeiculoService service) {
+		this.service = service;
+	}
 	
 	//Métodos Action
 	@FXML
@@ -91,11 +95,6 @@ public class VeiculoListController implements Initializable {
 	@FXML
 	public void onBtnSairAction() {
 		System.out.println("Sair");
-	}
-	
-	//injeção de dependencia
-	public void setVeiculoService( VeiculoService service) {
-		this.service = service;
 	}
 	
 	

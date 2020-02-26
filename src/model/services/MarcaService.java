@@ -8,13 +8,18 @@ import model.entities.Marca;
 
 public class MarcaService {
 	
-	private MarcaDao dao = DaoFactory.createMarcaDao();
+	private MarcaDao marcaDao = DaoFactory.createMarcaDao();
 	
-	public void saveOrupdate() {
+	public void saveOrupdate(Marca obj) {
+		if(obj.getId() == null){
+			this.marcaDao.insert(obj);
+		}else {
+			this.marcaDao.update(obj);
+		}
 		
 	}
 	
 	public List<Marca> findAll(){
-		return dao.findAll();
+		return marcaDao.findAll();
 	}
 }

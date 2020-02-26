@@ -58,6 +58,7 @@ public class ModeloListController implements Initializable{
 		@FXML
 		private Button btnSair;
 		
+	//Injeção de dependência
 		
 		public void setModeloService(ModeloService modeloService) {
 			this.service = modeloService;
