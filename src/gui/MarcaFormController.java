@@ -8,6 +8,7 @@ import db.DBException;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
@@ -42,7 +43,7 @@ public class MarcaFormController implements Initializable {
 	}
 		
 		
-	public void onBtnGravarAction() {
+	public void onBtnGravarAction(ActionEvent event) {
 		if(entity == null) {
 			throw new IllegalStateException("entity was null");
 		};
@@ -53,14 +54,15 @@ public class MarcaFormController implements Initializable {
 		try {
 		 entity = getFormData();
 		this.service.saveOrupdate(entity);
+		Utils.currentStage(event).close();
 		}catch(DBException e) {
 			Alerts.showAlert("Erro ao salvar nova marca", "Alerta", e.getMessage(), AlertType.ERROR);
 		}
 		
 	}	
 
-	public void onBtnCancelarAction() {
-		System.out.println("cancelado");
+	public void onBtnCancelarAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	private Marca getFormData() {

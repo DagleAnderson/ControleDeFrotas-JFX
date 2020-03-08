@@ -74,8 +74,8 @@ public class ModeloFormController implements Initializable {
 	}
 
 
-	public void onBtnCancelarAction() {
-		System.out.println("cancelar");
+	public void onBtnCancelarAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	private Modelo getFormData() {
