@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,11 +27,10 @@ import javafx.stage.Stage;
 import model.entities.Modelo;
 import model.services.ModeloService;
 
-public class ModeloListController implements Initializable{
+public class ModeloListController implements Initializable,DataChangeListener{
 	
 //Injeção de dependências	
 	private ModeloService service;
-	
 	
 	//TextField
 		@FXML
@@ -98,6 +98,7 @@ public class ModeloListController implements Initializable{
 				ModeloFormController controller = loader.getController();
 				controller.setModelo(obj);
 				controller.setModeloService(new ModeloService());
+				controller.subscribeDataChangeListener(this);
 				
 				Stage dialogStage = new Stage();//Novo Palco 
 				dialogStage.setTitle("Dados de Modelo");//titulo da Stage
@@ -134,10 +135,17 @@ public class ModeloListController implements Initializable{
 			tableColumnDesc.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 			tableColumnMarca.setCellValueFactory(new PropertyValueFactory<>("marca"));
 		}
+		
+		@Override
+		public void onDataChanged() {
+			this.updateTableView();
+		}
 
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			InicializeNodes();
 			
 		}
+
+	
 }

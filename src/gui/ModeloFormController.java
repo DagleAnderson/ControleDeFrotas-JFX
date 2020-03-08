@@ -1,9 +1,13 @@
 package gui;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+
 import db.DBException;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
@@ -22,7 +26,10 @@ public class ModeloFormController implements Initializable {
 	
 	//injeções de dependência
 	private Modelo entity;
+	
 	private ModeloService service;
+	
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
 	
 	//componentes FXML
@@ -65,7 +72,7 @@ public class ModeloFormController implements Initializable {
 		try {
 			this.entity = getFormData();
 			service.SaveOrUpdate(entity);
-			
+			notifydataChangeListeners();
 			Utils.currentStage(event).close();
 			
 		}catch(DBException e) {
@@ -85,7 +92,18 @@ public class ModeloFormController implements Initializable {
 		
 		return obj;
 	}
+	
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		dataChangeListeners.add(listener);
+	}
 
+
+	private void notifydataChangeListeners() {
+		for(DataChangeListener Listener : dataChangeListeners) {
+			Listener.onDataChanged();
+		}
+		
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
