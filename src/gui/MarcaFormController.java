@@ -2,9 +2,12 @@ package gui;
 
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import db.DBException;
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
@@ -22,6 +25,7 @@ public class MarcaFormController implements Initializable {
 	//Injeção de dependências
 	private Marca entity;
 	private MarcaService service;
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
 	//componentes FXML
 		@FXML
@@ -54,7 +58,9 @@ public class MarcaFormController implements Initializable {
 		try {
 		 entity = getFormData();
 		this.service.saveOrupdate(entity);
+		notifyDataChangeListener();
 		Utils.currentStage(event).close();
+		
 		}catch(DBException e) {
 			Alerts.showAlert("Erro ao salvar nova marca", "Alerta", e.getMessage(), AlertType.ERROR);
 		}
@@ -73,6 +79,17 @@ public class MarcaFormController implements Initializable {
 		return obj;
 	}
 
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		this.dataChangeListeners.add(listener);
+	}
+	
+	private void notifyDataChangeListener() {
+		for(DataChangeListener listener : dataChangeListeners){
+			listener.onDataChanged();
+		}
+	}
+	
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		//regras de negócio da classe Constraints de gui/utils

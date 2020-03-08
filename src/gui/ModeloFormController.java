@@ -72,7 +72,7 @@ public class ModeloFormController implements Initializable {
 		try {
 			this.entity = getFormData();
 			service.SaveOrUpdate(entity);
-			notifydataChangeListeners();
+			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
 			
 		}catch(DBException e) {
@@ -98,7 +98,7 @@ public class ModeloFormController implements Initializable {
 	}
 
 
-	private void notifydataChangeListeners() {
+	private void notifyDataChangeListeners() {
 		for(DataChangeListener Listener : dataChangeListeners) {
 			Listener.onDataChanged();
 		}

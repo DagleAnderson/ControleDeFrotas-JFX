@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import model.entities.Marca;
 import model.services.MarcaService;
 
-public class MarcaListController implements Initializable {
+public class MarcaListController implements Initializable,DataChangeListener {
 	
 	//injeção de dependência
 		private MarcaService service;
@@ -110,6 +110,7 @@ public class MarcaListController implements Initializable {
 				MarcaFormController controller = loader.getController();
 				controller.setMarca(obj);
 				controller.setMarcaService(new MarcaService());
+				controller.subscribeDataChangeListener(this);
 						
 				Stage dialogForm = new Stage();
 				dialogForm.setTitle("Dados de Marca");
@@ -122,10 +123,17 @@ public class MarcaListController implements Initializable {
 			}
 		
 	}
+	
+	@Override
+	public void onDataChanged() {
+		this.updateTableView();
+		
+	}
 			
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.InitializeNodes();
 	}
+
 
 }
