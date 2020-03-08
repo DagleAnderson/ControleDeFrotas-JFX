@@ -4,9 +4,13 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import db.DBException;
+import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.entities.Marca;
@@ -39,8 +43,20 @@ public class MarcaFormController implements Initializable {
 		
 		
 	public void onBtnGravarAction() {
+		if(entity == null) {
+			throw new IllegalStateException("entity was null");
+		};
+		if(service == null) {
+			throw new IllegalStateException("service was null");
+		};
+	
+		try {
 		 entity = getFormData();
 		this.service.saveOrupdate(entity);
+		}catch(DBException e) {
+			Alerts.showAlert("Erro ao salvar nova marca", "Alerta", e.getMessage(), AlertType.ERROR);
+		}
+		
 	}	
 
 	public void onBtnCancelarAction() {
@@ -57,7 +73,10 @@ public class MarcaFormController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
+		//regras de negócio da classe Constraints de gui/utils
+				Constraints.setTextFieldInteger(txtId);
+				Constraints.setTextFieldMaxLength(txtDesc, 30);
+			
 		
 	}
 	

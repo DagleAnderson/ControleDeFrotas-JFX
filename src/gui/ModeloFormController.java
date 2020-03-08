@@ -3,12 +3,17 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import db.DBException;
+import gui.util.Alerts;
+import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import model.entities.Marca;
 import model.entities.Modelo;
 import model.services.ModeloService;
@@ -50,9 +55,22 @@ public class ModeloFormController implements Initializable {
 		
 	}
 	
-	public void onBtnGravarAction() {
-		this.entity = getFormData();
-		service.SaveOrUpdate(entity);
+	public void onBtnGravarAction( ActionEvent event) {
+		if(entity == null) {
+			throw new IllegalStateException("Entity was null");
+		}
+		if(service == null) {
+			throw new IllegalStateException("Sevice was null");
+		}
+		try {
+			this.entity = getFormData();
+			service.SaveOrUpdate(entity);
+			
+			Utils.currentStage(event).close();
+			
+		}catch(DBException e) {
+			Alerts.showAlert("Erro ao Salvar Novo Veiculo", "Alerta", e.getMessage(), AlertType.ERROR);
+		}
 	}
 
 
@@ -71,8 +89,10 @@ public class ModeloFormController implements Initializable {
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		// TODO Auto-generated method stub
-		
+		//regras de negócio da classe Constraints de gui/utils
+		Constraints.setTextFieldInteger(txtId);
+		Constraints.setTextFieldMaxLength(txtDesc, 30);
+	
 	}
 
 }
