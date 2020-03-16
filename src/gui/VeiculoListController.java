@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
+import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import model.entities.Veiculo;
 import model.services.VeiculoService;
 
-public class VeiculoListController implements Initializable {
+public class VeiculoListController implements Initializable,DataChangeListener {
 	
 	//Injeção de dependências
 	private VeiculoService service;
@@ -132,6 +132,7 @@ public class VeiculoListController implements Initializable {
 			VeiculoFormController controller = loader.getController();
 			controller.setVeiculo(obj);
 			controller.setVeiculoService(new VeiculoService());
+			controller.subscribeDataChangeListener(this);
 			//controller.updateFormData();
 			
 			Stage dialogStage = new Stage(); //Novo Palco 
@@ -147,12 +148,17 @@ public class VeiculoListController implements Initializable {
 		}
 	}
 	
-	
+	@Override
+	public void onDataChanged() {
+		this.updateTableView();
+	}
+
 	@Override //funciona com uma especie de construtor para inicialização de nodes no javaFX
 	public void initialize(URL uri, ResourceBundle rb) {
 		InicializeNodes();
 		
 	}
+
 
 
 	

@@ -4,7 +4,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import db.DBException;
 import gui.listeners.DataChangeListener;
@@ -18,6 +20,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.entities.Marca;
+import model.exceptions.ValidationException;
 import model.services.MarcaService;
 
 public class MarcaFormController implements Initializable {
@@ -60,7 +63,9 @@ public class MarcaFormController implements Initializable {
 		this.service.saveOrupdate(entity);
 		notifyDataChangeListener();
 		Utils.currentStage(event).close();
-		
+		}catch(ValidationException e){
+			this.setErroMenssage(e.getErrors());
+			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
 		}catch(DBException e) {
 			Alerts.showAlert("Erro ao salvar nova marca", "Alerta", e.getMessage(), AlertType.ERROR);
 		}
@@ -72,15 +77,31 @@ public class MarcaFormController implements Initializable {
 	}
 	
 	private Marca getFormData() {
+		ValidationException exception = new ValidationException("validation error");
 		Marca obj = new Marca();
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		if(txtDesc.getText() == null || txtDesc.getText().trim().equals("")) {
+			exception.addError("descricao", "");
+		}
 		obj.setDescricao(txtDesc.getText());
 		
+		if(exception.getErrors().size() > 0 ) {
+			throw exception;
+		}
 		return obj;
 	}
 
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		this.dataChangeListeners.add(listener);
+	}
+	
+	
+	private void setErroMenssage(Map<String,String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if(fields.contains("descricao")){
+			txtDesc.setStyle("-fx-border-color:#f00");;
+		}
 	}
 	
 	private void notifyDataChangeListener() {

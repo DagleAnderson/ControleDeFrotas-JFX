@@ -3,8 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
-
+import java.util.Set;
 
 import db.DBException;
 import gui.listeners.DataChangeListener;
@@ -20,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import model.entities.Marca;
 import model.entities.Modelo;
+import model.exceptions.ValidationException;
 import model.services.ModeloService;
 
 public class ModeloFormController implements Initializable {
@@ -74,9 +76,12 @@ public class ModeloFormController implements Initializable {
 			service.SaveOrUpdate(entity);
 			notifyDataChangeListeners();
 			Utils.currentStage(event).close();
-			
+		
+		}catch(ValidationException e){
+			this.setErroMenssage(e.getErrors());
+			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
 		}catch(DBException e) {
-			Alerts.showAlert("Erro ao Salvar Novo Veiculo", "Alerta", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Alerta", "Erro ao Salvar Novo Modelo", e.getMessage(), AlertType.ERROR);
 		}
 	}
 
@@ -86,24 +91,44 @@ public class ModeloFormController implements Initializable {
 	}
 	
 	private Modelo getFormData() {
+		ValidationException exception = new ValidationException("validation error");
+		
 		Modelo obj = new Modelo();
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		
+		if(txtDesc.getText() == null || txtDesc.getText().trim().equals("")) {
+			exception.addError("descricao", "");
+		}
 		obj.setDescricao(txtDesc.getText());
+		
+		if(exception.getErrors().size() > 0 ) {
+			throw exception;
+		}
 		
 		return obj;
 	}
+	
 	
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListeners.add(listener);
 	}
 
-
+	
 	private void notifyDataChangeListeners() {
 		for(DataChangeListener Listener : dataChangeListeners) {
 			Listener.onDataChanged();
 		}
 		
 	}
+	
+	private void setErroMenssage(Map<String,String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if(fields.contains("descricao")){
+			txtDesc.setStyle("-fx-border-color:#f00");;
+		}
+	}
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {

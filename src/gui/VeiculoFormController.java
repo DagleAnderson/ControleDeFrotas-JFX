@@ -1,22 +1,30 @@
 package gui;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
+import db.DBException;
 import gui.listeners.DataChangeListener;
+import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import model.entities.Marca;
 import model.entities.Modelo;
 import model.entities.Veiculo;
+import model.exceptions.ValidationException;
 import model.services.VeiculoService;
 
 public class VeiculoFormController implements Initializable {
@@ -27,6 +35,7 @@ public class VeiculoFormController implements Initializable {
 	
 	private VeiculoService service;
 
+	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
 // Injeções de Dependência	
 	
@@ -81,15 +90,45 @@ public class VeiculoFormController implements Initializable {
 		}
 		
 		@FXML
-		public void onBtnGravarAction() {
-			entity  = getFormData();
-			service.saveOrUpdate(entity);
+		public void onBtnGravarAction(ActionEvent event) {
+			if(entity == null) {
+				throw new IllegalArgumentException("Entity was null");
+			}
+			if(service == null) {
+				throw new IllegalArgumentException("Sergice was null");
+			}
+			try {
+				entity  = getFormData();
+				service.saveOrUpdate(entity);
+				notifyDatachangeListener();
+				Utils.currentStage(event).close();
+			}catch(ValidationException e){
+				this.setErrorMenssage(e.getErrors());
+				Alerts.showAlert("Alerta", "Campos obrigatórios não informados",e.getMessage(), AlertType.INFORMATION);
+			}catch(DBException e) {
+				Alerts.showAlert("Alerta", "Erro ao salvar novo Veículo",e.getMessage(), AlertType.ERROR);
+			}
 		}
 		
+
 		//pega dados do Form 
 		private Veiculo getFormData() {
+			
+			ValidationException exception = new ValidationException("validation error");
+			
+			
 			Veiculo obj = new Veiculo();
 			obj.setId(Utils.tryParseToInt(txtId.getText()));
+				
+			//Validation - Campos obrigatórios
+				if(txtDescricao.getText() == null || txtDescricao.getText().trim().equals("")) {
+					exception.addError("descricao", "");
+				}
+				if(txtPlaca.getText() == null || txtPlaca.getText().trim().equals("")) {
+					exception.addError("placa", "");
+				}
+			
+			
 			obj.setDescricao(txtDescricao.getText());
 			obj.setModelo(new Modelo(1,"Truck",new Marca(1,"Wolksvagem"))/*ação temporária*/);
 			obj.setAno(txtAno.getText());
@@ -98,7 +137,35 @@ public class VeiculoFormController implements Initializable {
 			obj.setRenavam(txtRenavam.getText());
 			obj.setPlaca(txtPlaca.getText());
 			
+			if(exception.getErrors().size() > 0 ) {
+				throw exception;
+			}
+			
 			return obj;
+		}
+		
+		public void subscribeDataChangeListener(DataChangeListener listener) {
+			this.dataChangeListeners.add(listener);
+		}
+		
+		private void notifyDatachangeListener() {
+			for(DataChangeListener listener : dataChangeListeners) {
+				listener.onDataChanged();
+			}
+			
+		}
+		
+		private void setErrorMenssage(Map<String,String> errors) {
+			Set<String> fields = errors.keySet();
+			
+			if(fields.contains("descricao")) {
+				//lblErrorDescricao.setText(errors.get("descricao"));
+				txtDescricao.setStyle("-fx-border-color: #f00");
+			}
+			
+			if(fields.contains("placa")) {
+				txtPlaca.setStyle("-fx-border-color: #f00");
+			}
 		}
 
 		@FXML
@@ -144,4 +211,5 @@ public class VeiculoFormController implements Initializable {
 			txtChassi.setText(entity.getChassi());
 			txtRenavam.setText(entity.getRenavam());	
 		}
+		
 }
