@@ -26,8 +26,8 @@ public class MarcaDaoJDBC implements MarcaDao {
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO marca(nome_marca) "+
-					"VALUES(?)",Statement.RETURN_GENERATED_KEYS);
+			st = conn.prepareStatement("INSERT INTO"
+					+" marca(nome_marca) VALUES(?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1,obj.getDescricao());	
 			
@@ -56,8 +56,23 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void update(Marca obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		
+		try {
+			st = conn.prepareStatement("UPDATE marca SET"
+										+" nome_marca=?  WHERE id_marca = ?");
+			st.setString(1,obj.getDescricao());
+			st.setInt(2, obj.getId());
+			
+			st.executeUpdate();
+			
+		}catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultset(rs);
+		}
 	}
 
 	@Override
@@ -68,9 +83,28 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public Marca findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM marca  WHERE id_marca = ?");
+
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Marca obj = instantiateMarca(rs);
+				
+				return obj;
+			}
+			return null;
+		}catch(SQLException e){
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
 	}
+
 
 	@Override
 	public List<Marca> findAll() {

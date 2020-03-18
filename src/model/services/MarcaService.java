@@ -19,6 +19,11 @@ public class MarcaService {
 		
 	}
 	
+	public Marca findById(Integer id){
+		return this.marcaDao.findById(id);
+	}
+	
+	
 	public List<Marca> findAll(){
 		return marcaDao.findAll();
 	}

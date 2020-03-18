@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -68,13 +69,15 @@ public class MarcaListController implements Initializable,DataChangeListener {
 	public void onBtnNovoAction(ActionEvent event){
 		Stage parentStage = Utils.currentStage(event);
 		Marca obj = new Marca();
-		createDialogForm(obj,"/gui/MarcaForm.fxml",parentStage);
+		this.createDialogForm(obj,"/gui/MarcaForm.fxml",parentStage);
 	}
 
-	public void onBtnEditarAction() {
-		System.out.println("editar");
+	public void onBtnEditarAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		Marca obj = getSelectedMarca();
+		this.createDialogForm(obj,"/gui/MarcaForm.fxml",parentStage);
 	}
-	
+
 	public void onBtnExcluirAction() {
 		System.out.println("excluir");
 	}
@@ -84,17 +87,27 @@ public class MarcaListController implements Initializable,DataChangeListener {
 	}
 	
 	//atualizador de dados do banco para a View
-			public void updateTableView() {
-				if(service == null) {
-					throw new IllegalStateException("Service was null");
-				}
-				
-				List<Marca> list  = service.findAll();
-					obsList = FXCollections.observableArrayList(list);
-					
-					tableViewMarca.setItems(obsList);
-				
+		public void updateTableView() {
+			if(service == null) {
+				throw new IllegalStateException("Service was null");
 			}
+				
+			List<Marca> list  = service.findAll();
+				obsList = FXCollections.observableArrayList(list);
+				
+				tableViewMarca.setItems(obsList);
+				tableViewMarca.refresh();
+				
+		}
+		
+		private Marca getSelectedMarca(){
+			if(service == null) {
+				throw new  IllegalStateException("Service was null");
+			}
+			Integer id = tableViewMarca.getSelectionModel().getSelectedItem().getId();
+			Marca obj = service.findById(id);
+			return obj;
+		}
 	
 	public void InitializeNodes() {
 		//Inicialização das colunas da tabela 
@@ -111,6 +124,7 @@ public class MarcaListController implements Initializable,DataChangeListener {
 				controller.setMarca(obj);
 				controller.setMarcaService(new MarcaService());
 				controller.subscribeDataChangeListener(this);
+				controller.updateFormData();
 						
 				Stage dialogForm = new Stage();
 				dialogForm.setTitle("Dados de Marca");

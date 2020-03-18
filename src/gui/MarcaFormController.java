@@ -40,7 +40,7 @@ public class MarcaFormController implements Initializable {
 		@FXML
 		private Button btnCancelar;	
 		
-	
+	//************* Injeções de Dependência ******************************
 	public void setMarca(Marca obj) {
 		this.entity = obj;
 	}	
@@ -48,8 +48,13 @@ public class MarcaFormController implements Initializable {
 	public void setMarcaService(MarcaService marcaService) {
 		this.service = marcaService;
 	}
+	
+	public void subscribeDataChangeListener(DataChangeListener listener) {
+		this.dataChangeListeners.add(listener);
+	}
+	// *******************************************************************
 		
-		
+	
 	public void onBtnGravarAction(ActionEvent event) {
 		if(entity == null) {
 			throw new IllegalStateException("entity was null");
@@ -90,10 +95,6 @@ public class MarcaFormController implements Initializable {
 		}
 		return obj;
 	}
-
-	public void subscribeDataChangeListener(DataChangeListener listener) {
-		this.dataChangeListeners.add(listener);
-	}
 	
 	
 	private void setErroMenssage(Map<String,String> errors) {
@@ -110,6 +111,11 @@ public class MarcaFormController implements Initializable {
 		}
 	}
 	
+	
+	public void updateFormData() {
+		txtId.setText(String.valueOf(entity.getId()));
+		txtDesc.setText(entity.getDescricao());
+	}
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
