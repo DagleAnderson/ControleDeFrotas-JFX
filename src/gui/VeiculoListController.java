@@ -24,6 +24,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Veiculo;
+import model.services.ModeloService;
 import model.services.VeiculoService;
 
 public class VeiculoListController implements Initializable,DataChangeListener {
@@ -131,7 +132,8 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 			//pega o controlador do form que irá sofrer a injeção
 			VeiculoFormController controller = loader.getController();
 			controller.setVeiculo(obj);
-			controller.setVeiculoService(new VeiculoService());
+			controller.setServices(new VeiculoService(),new ModeloService());
+			controller.loadAssociatedObject();
 			controller.subscribeDataChangeListener(this);
 			//controller.updateFormData();
 			
@@ -144,6 +146,7 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 			dialogStage.showAndWait(); // carregar form na tela
 			
 		}catch(IOException e) {
+			e.printStackTrace();
 			Alerts.showAlert("IOExeption", "Erro loading View", e.getMessage(), AlertType.ERROR );
 		}
 	}

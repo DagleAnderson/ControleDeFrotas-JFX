@@ -12,6 +12,7 @@ import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,11 +20,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.util.Callback;
 import model.entities.Marca;
 import model.entities.Modelo;
 import model.entities.Veiculo;
 import model.exceptions.ValidationException;
+import model.services.ModeloService;
 import model.services.VeiculoService;
 
 public class VeiculoFormController implements Initializable {
@@ -33,6 +38,7 @@ public class VeiculoFormController implements Initializable {
 	private Veiculo entity;
 	
 	private VeiculoService service;
+	private ModeloService modeloService;
 
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
@@ -66,7 +72,7 @@ public class VeiculoFormController implements Initializable {
 		@FXML
 		private Button btnCancelar;
 		
-		private ObservableList<Modelo> obsListMedelo;
+		private ObservableList<Modelo> obsListModelo;
 	
 		
 //métodos de injeção
@@ -77,8 +83,9 @@ public class VeiculoFormController implements Initializable {
 		}
 
 		//recebe service do parent pane
-		public void setVeiculoService(VeiculoService servico) {
+		public void setServices(VeiculoService servico,ModeloService modeloService) {
 			this.service = servico;
+			this.modeloService = modeloService;
 		}
 		
 //métodos de injeção
@@ -143,6 +150,16 @@ public class VeiculoFormController implements Initializable {
 			return obj;
 		}
 		
+		public void loadAssociatedObject() {
+			
+			if(modeloService == null) {
+				throw new IllegalStateException("Departamento was null");
+			}
+			List<Modelo> listMod = modeloService.findAll();
+			obsListModelo = FXCollections.observableArrayList(listMod);
+			comboModelo.setItems(obsListModelo);
+		}
+		
 		public void subscribeDataChangeListener(DataChangeListener listener) {
 			this.dataChangeListeners.add(listener);
 		}
@@ -176,6 +193,9 @@ public class VeiculoFormController implements Initializable {
 		@Override
 		public void initialize(URL arg0, ResourceBundle arg1) {
 			this.initicalizeNodes();
+			this.initializeComboBoxDepartment();
+			
+			
 		}
 		
 		//Controlar tipo e quantidade dos nodes(campos)
@@ -194,6 +214,19 @@ public class VeiculoFormController implements Initializable {
 					
 		}
 		
+		private void initializeComboBoxDepartment() { 
+			Callback<ListView<Modelo>, ListCell<Modelo>> factory = lv -> new ListCell<Modelo>() {  
+				@Override      
+				protected void updateItem(Modelo item, boolean empty) { 
+					super.updateItem(item, empty);     
+					setText(empty ? "" : item.getDescricao());  
+					} 
+				}; 
+		
+		 comboModelo.setCellFactory(factory);  
+		 comboModelo.setButtonCell(factory.call(null));  
+	}
+		
 		
 		public void updateFormData(){ // atualizar form ao abrir edição de veiculo cadastrado
 			if(entity == null) {
@@ -208,7 +241,14 @@ public class VeiculoFormController implements Initializable {
 			txtKmRodado.setText(String.valueOf(entity.getKmRodado()));
 			txtPlaca.setText(entity.getPlaca());
 			txtChassi.setText(entity.getChassi());
-			txtRenavam.setText(entity.getRenavam());	
+			txtRenavam.setText(entity.getRenavam());
+			if(entity.getModelo() == null) {
+				comboModelo.getSelectionModel().selectFirst();
+			}
+			comboModelo.setValue(entity.getModelo());
+			
 		}
+		
+		
 		
 }
