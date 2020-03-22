@@ -51,7 +51,7 @@ public class VeiculoFormController implements Initializable {
 		@FXML
 		private TextField txtAno;
 		@FXML
-		private ComboBox<Modelo> comboModelo;
+		private ComboBox<Modelo> cbxModelo;
 		@FXML
 		private TextField txtMarca;
 		@FXML
@@ -116,6 +116,10 @@ public class VeiculoFormController implements Initializable {
 			}
 		}
 		
+		public void onBtnCancelarAction(ActionEvent event){
+			Utils.currentStage(event).close();
+		}
+		
 
 		//pega dados do Form 
 		private Veiculo getFormData() {
@@ -150,6 +154,7 @@ public class VeiculoFormController implements Initializable {
 			return obj;
 		}
 		
+		//Carregamento Inicial ComboBox Marca
 		public void loadAssociatedObject() {
 			
 			if(modeloService == null) {
@@ -157,7 +162,7 @@ public class VeiculoFormController implements Initializable {
 			}
 			List<Modelo> listMod = modeloService.findAll();
 			obsListModelo = FXCollections.observableArrayList(listMod);
-			comboModelo.setItems(obsListModelo);
+			cbxModelo.setItems(obsListModelo);
 		}
 		
 		public void subscribeDataChangeListener(DataChangeListener listener) {
@@ -189,14 +194,27 @@ public class VeiculoFormController implements Initializable {
 			System.out.println("cancelar");
 		}
 		
-	
-		@Override
-		public void initialize(URL arg0, ResourceBundle arg1) {
-			this.initicalizeNodes();
-			this.initializeComboBoxDepartment();
+		public void updateFormData(){ // atualizar form ao abrir edição de veiculo cadastrado
+			if(entity == null) {
+				throw new IllegalStateException("Entity new null");
+			}
 			
+			txtId.setText(String.valueOf(entity.getId()));
+			txtDescricao.setText(entity.getDescricao());
+			//comboModelo.setItems();
+			txtMarca.setText(entity.getModelo().getMarca().getDescricao());
+			txtAno.setText(entity.getAno());
+			txtKmRodado.setText(String.valueOf(entity.getKmRodado()));
+			txtPlaca.setText(entity.getPlaca());
+			txtChassi.setText(entity.getChassi());
+			txtRenavam.setText(entity.getRenavam());
+			if(entity.getModelo() == null) {
+				cbxModelo.getSelectionModel().selectFirst();
+			}
+			cbxModelo.setValue(entity.getModelo());
 			
 		}
+		
 		
 		//Controlar tipo e quantidade dos nodes(campos)
 		public void initicalizeNodes() {
@@ -214,7 +232,8 @@ public class VeiculoFormController implements Initializable {
 					
 		}
 		
-		private void initializeComboBoxDepartment() { 
+		//Inicialização do Combobox
+		private void initializeComboBoxModelo() { 
 			Callback<ListView<Modelo>, ListCell<Modelo>> factory = lv -> new ListCell<Modelo>() {  
 				@Override      
 				protected void updateItem(Modelo item, boolean empty) { 
@@ -223,29 +242,17 @@ public class VeiculoFormController implements Initializable {
 					} 
 				}; 
 		
-		 comboModelo.setCellFactory(factory);  
-		 comboModelo.setButtonCell(factory.call(null));  
+		 cbxModelo.setCellFactory(factory);  
+		 cbxModelo.setButtonCell(factory.call(null));  
 	}
 		
 		
-		public void updateFormData(){ // atualizar form ao abrir edição de veiculo cadastrado
-			if(entity == null) {
-				throw new IllegalStateException("Entity new null");
-			}
+
+		@Override
+		public void initialize(URL arg0, ResourceBundle arg1) {
+			this.initicalizeNodes();
+			this.initializeComboBoxModelo();
 			
-			txtId.setText(String.valueOf(entity.getId()));
-			txtDescricao.setText(entity.getDescricao());
-			//comboModelo.setItems();
-			txtMarca.setText(entity.getModelo().getMarca().getDescricao());
-			txtAno.setText(entity.getAno());
-			txtKmRodado.setText(String.valueOf(entity.getKmRodado()));
-			txtPlaca.setText(entity.getPlaca());
-			txtChassi.setText(entity.getChassi());
-			txtRenavam.setText(entity.getRenavam());
-			if(entity.getModelo() == null) {
-				comboModelo.getSelectionModel().selectFirst();
-			}
-			comboModelo.setValue(entity.getModelo());
 			
 		}
 		

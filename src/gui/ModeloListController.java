@@ -24,8 +24,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.entities.Marca;
 import model.entities.Modelo;
+import model.services.MarcaService;
 import model.services.ModeloService;
 
 public class ModeloListController implements Initializable,DataChangeListener{
@@ -102,7 +102,8 @@ public class ModeloListController implements Initializable,DataChangeListener{
 				//pega o controlador do form que irá sofrer a injeção
 				ModeloFormController controller = loader.getController();
 				controller.setModelo(obj);
-				controller.setModeloService(new ModeloService());
+				controller.setServices(new ModeloService(),new MarcaService());
+				controller.loadAssociatedObject();
 				controller.subscribeDataChangeListener(this);
 				controller.updateFormData();
 				

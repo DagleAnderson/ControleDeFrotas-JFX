@@ -12,16 +12,22 @@ import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Callback;
 import model.entities.Marca;
 import model.entities.Modelo;
 import model.exceptions.ValidationException;
+import model.services.MarcaService;
 import model.services.ModeloService;
 
 public class ModeloFormController implements Initializable {
@@ -30,6 +36,8 @@ public class ModeloFormController implements Initializable {
 	private Modelo entity;
 	
 	private ModeloService service;
+	
+	private MarcaService marcaService;
 	
 	private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 	
@@ -48,14 +56,17 @@ public class ModeloFormController implements Initializable {
 	@FXML
 	private Button btnCancelar;
 	
+	private ObservableList<Marca> obsListMarca;
+	
 	
 	//Injeção de dependência ************
 	public void setModelo(Modelo modelo) {
 		this.entity = modelo;
 	}
 	
-	public void setModeloService(ModeloService modService) {
+	public void setServices(ModeloService modService,MarcaService marcaService) {
 		this.service = modService;
+		this.marcaService = marcaService;
 	}
 	
 	//***********************************
@@ -109,6 +120,17 @@ public class ModeloFormController implements Initializable {
 		return obj;
 	}
 	
+	//Carregamento Inicial ComboBox Marca
+	public void loadAssociatedObject() {
+		
+		if(marcaService == null) {
+			throw new IllegalStateException("Departamento was null");
+		}
+		List<Marca> listMarca = marcaService.findAll();
+		obsListMarca = FXCollections.observableArrayList(listMarca);
+		cbxMarca.setItems(obsListMarca);
+	}
+	
 	
 	public void subscribeDataChangeListener(DataChangeListener listener) {
 		dataChangeListeners.add(listener);
@@ -130,18 +152,45 @@ public class ModeloFormController implements Initializable {
 		}
 	}
 	
+	
 	public void updateFormData() {
 		txtId.setText(String.valueOf(entity.getId()));
 		txtDesc.setText(entity.getDescricao());
+		if(cbxMarca == null) {
+			cbxMarca.getSelectionModel().selectFirst();
+		}
+		cbxMarca.setValue(entity.getMarca());
 	}
+	
+	private void initializeNodes() {	
+		//regras de negócio da classe Constraints de gui/utils
+		Constraints.setTextFieldInteger(txtId);
+		Constraints.setTextFieldMaxLength(txtDesc, 30);
+	}
+	
+
+
+	//Inicialização do Combobox 
+	private void initializeComboBoxMarca() { 
+		Callback<ListView<Marca>, ListCell<Marca>> factory = lv -> new ListCell<Marca>() {  
+			@Override      
+			protected void updateItem(Marca item, boolean empty) { 
+				super.updateItem(item, empty);     
+				setText(empty ? "" : item.getDescricao());  
+				} 
+			}; 
+	
+	 cbxMarca.setCellFactory(factory);  
+	 cbxMarca.setButtonCell(factory.call(null));  
+}
+
 	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		//regras de negócio da classe Constraints de gui/utils
-		Constraints.setTextFieldInteger(txtId);
-		Constraints.setTextFieldMaxLength(txtDesc, 30);
-	
-	}
+		this.initializeNodes();
+		this.initializeComboBoxMarca();
 
+	}
+	
 }
