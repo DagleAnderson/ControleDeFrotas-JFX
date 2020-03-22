@@ -101,6 +101,7 @@ public class ModeloFormController implements Initializable {
 		}
 		obj.setDescricao(txtDesc.getText());
 		
+		
 		if(exception.getErrors().size() > 0 ) {
 			throw exception;
 		}
@@ -127,6 +128,11 @@ public class ModeloFormController implements Initializable {
 		if(fields.contains("descricao")){
 			txtDesc.setStyle("-fx-border-color:#f00");;
 		}
+	}
+	
+	public void updateFormData() {
+		txtId.setText(String.valueOf(entity.getId()));
+		txtDesc.setText(entity.getDescricao());
 	}
 	
 	

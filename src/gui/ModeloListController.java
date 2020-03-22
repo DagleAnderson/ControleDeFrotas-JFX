@@ -24,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.entities.Marca;
 import model.entities.Modelo;
 import model.services.ModeloService;
 
@@ -73,10 +74,14 @@ public class ModeloListController implements Initializable,DataChangeListener{
 		}
 		
 		@FXML 
-		public void onBtnEditarAction() {
-			System.out.println("editar Modelo");
+		public void onBtnEditarAction(ActionEvent event) {
+			Stage parentStage = Utils.currentStage(event);
+			Modelo obj = getSelectedModelo();
+			
+			createDialogForm(obj,"/gui/ModeloForm.fxml", parentStage);
 		}
 		
+
 		@FXML 
 		public void onBtnExcluirAction() {
 			System.out.println("excluir Modelo");
@@ -99,6 +104,7 @@ public class ModeloListController implements Initializable,DataChangeListener{
 				controller.setModelo(obj);
 				controller.setModeloService(new ModeloService());
 				controller.subscribeDataChangeListener(this);
+				controller.updateFormData();
 				
 				Stage dialogStage = new Stage();//Novo Palco 
 				dialogStage.setTitle("Dados de Modelo");//titulo da Stage
@@ -115,7 +121,6 @@ public class ModeloListController implements Initializable,DataChangeListener{
 			
 		}
 		
-		
 		//atualizador de dados do banco para a View
 		public void updateTableView() {
 			if(service == null) {
@@ -126,7 +131,17 @@ public class ModeloListController implements Initializable,DataChangeListener{
 				obsList = FXCollections.observableArrayList(list);
 				
 				tableViewModelo.setItems(obsList);
+				tableViewModelo.refresh();
 			
+		}
+		
+		private Modelo getSelectedModelo() {
+			if(service == null) {
+				throw new  IllegalStateException("Service was null");
+			}
+			Integer id = tableViewModelo.getSelectionModel().getSelectedItem().getId();
+			Modelo obj = service.findById(id);
+			return obj;
 		}
 		
 		private void InicializeNodes() {

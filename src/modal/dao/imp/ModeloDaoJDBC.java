@@ -61,7 +61,26 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public void update(Modelo obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st  = null;
+		ResultSet rs = null;
+		try {
+			
+			st = conn.prepareStatement("UPDATE modelo SET"
+					+" nome_mod=?,marca_id=?  WHERE id_mod = ?");
+		
+		st.setString(1,obj.getDescricao());
+		st.setInt(2, 1);
+		
+		st.setInt(3,obj.getId());
+			
+		 st.executeUpdate();
+			
+		} catch (SQLException e) {
+		   throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}		
 		
 	}
 
@@ -73,8 +92,29 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public Modelo findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement("SELECT modelo.*,marca.nome_marca as marca FROM modelo"
+					+ " INNER JOIN marca ON modelo.marca_id = marca.id_marca"
+					+ " WHERE id_mod = ?");
+
+			st.setInt(1, id);
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				Marca  objMarca  = instantiateMarca(rs);
+				Modelo obj = instantiateModelo(rs,objMarca );
+				
+				return obj;
+			}
+			return null;
+		}catch(SQLException e){
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
 	}
 
 	@Override

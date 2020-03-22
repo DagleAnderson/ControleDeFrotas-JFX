@@ -11,10 +11,6 @@ public class ModeloService {
 	private ModeloDao modDao = DaoFactory.createModeloDao();
 	
 	
-	public List<Modelo> findAll(){
-		return modDao.findAll();
-	}
-	
 	public void SaveOrUpdate(Modelo obj) {
 		if(obj.getId() == null){
 			modDao.insert(obj);
@@ -22,5 +18,16 @@ public class ModeloService {
 			modDao.update(obj);
 		}
 	}
+	
+	public Modelo findById(Integer id) {
+		return modDao.findById(id);
+	}
+	
+	
+	public List<Modelo> findAll(){
+		return modDao.findAll();
+	}
+	
+
 	
 }
