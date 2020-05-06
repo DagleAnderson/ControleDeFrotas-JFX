@@ -19,8 +19,8 @@ public class ModeloService {
 		}
 	}
 	
-	public Modelo findById(Integer id) {
-		return modDao.findById(id);
+	public Modelo findById(Modelo obj) {
+		return modDao.findById(obj.getId());
 	}
 	
 	public void remove(Modelo obj) {

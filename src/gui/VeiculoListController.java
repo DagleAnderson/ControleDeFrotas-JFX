@@ -3,8 +3,11 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+
+import db.DBIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -17,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -84,18 +88,35 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 	}
 	
 	@FXML
-	public void onBtnEditarAction() {
-		System.out.println("Editar");
+	public void onBtnEditarAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		Veiculo obj = getSelectedVeiculo();
+		createDialogForm(obj, "/gui/VeiculoForm.fxml", parentStage);
+	}
+
+	@FXML
+	public void onBtnExcluirAction(ActionEvent event) {
+		 Optional<ButtonType> result = Alerts.showConfirmation("Confirmation","Deseja confirmar essa operação?");
+		 if(result.get() == ButtonType.OK) {
+			 Veiculo obj= getSelectedVeiculo();
+			
+			 if(service == null) {
+				 throw new IllegalStateException("service was null");
+			 }
+			 
+			 try {
+				 service.remove(obj);
+				 this.updateTableView();
+			 }catch (DBIntegrityException e) {
+				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
+			}
+		 }
+		 
 	}
 	
 	@FXML
-	public void onBtnExcluirAction() {
-		System.out.println("Excluir");
-	}
-	
-	@FXML
-	public void onBtnSairAction() {
-		System.out.println("Sair");
+	public void onBtnSairAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	
@@ -121,6 +142,21 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 		
 	}
 	
+	//pegar veiculo selecionado
+	private Veiculo getSelectedVeiculo() {
+		if(service == null) {
+			throw new IllegalStateException("service was null");
+		}
+		
+		if(tableViewVeiculo.getSelectionModel().getSelectedItem() == null) {
+			Alerts.showAlert("Item not selected", null,"Ops! você esqueceu de selecionar um veículo!", AlertType.INFORMATION);
+		}
+		
+		 Veiculo obj = tableViewVeiculo.getSelectionModel().getSelectedItem(); 
+		
+		return service.findById(obj);
+	}
+	
 	private void createDialogForm(Veiculo obj,String absoluteName,Stage parentStage /*stage pai*/ ) {
 		try {
 			
@@ -135,7 +171,7 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 			controller.setServices(new VeiculoService(),new ModeloService());
 			controller.loadAssociatedObject();
 			controller.subscribeDataChangeListener(this);
-			//controller.updateFormData();
+			controller.updateFormData();
 			
 			Stage dialogStage = new Stage(); //Novo Palco 
 			dialogStage.setTitle("Dados de Veiculo"); //titulo da Stage

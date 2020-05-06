@@ -10,6 +10,7 @@ public class VeiculoService {
 	
 	private VeiculoDao veicDao = DaoFactory.createVeiculoDao();
 	
+	
 	public List<Veiculo> findAll(){
 
 		return veicDao.findAll();
@@ -25,4 +26,11 @@ public class VeiculoService {
 		
 	}
 	
+	public Veiculo findById(Veiculo obj) {
+		return veicDao.findById(obj.getId());
+	}
+	
+	public void remove(Veiculo obj) {
+		veicDao.delete(obj.getId());
+	}
 }

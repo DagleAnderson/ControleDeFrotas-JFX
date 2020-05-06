@@ -99,8 +99,8 @@ public class MarcaListController implements Initializable,DataChangeListener {
 		}	
 	}
 	
-	public void onBtnSairAction() {
-		System.out.println("Sair");
+	public void onBtnSairAction(ActionEvent event) {
+		Utils.currentStage(event).close();
 	}
 	
 	//atualizador de dados do banco para a View

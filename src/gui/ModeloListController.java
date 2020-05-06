@@ -109,8 +109,8 @@ public class ModeloListController implements Initializable,DataChangeListener{
 		}
 		
 		@FXML 
-		public void onBtnSairAction() {
-			System.out.println("sair Modelo");
+		public void onBtnSairAction(ActionEvent event) {
+			Utils.currentStage(event).close();
 		}
 		
 		public void createDialogForm(Modelo obj,String absoluteName, Stage parentStage){
@@ -161,9 +161,13 @@ public class ModeloListController implements Initializable,DataChangeListener{
 			if(service == null) {
 				throw new  IllegalStateException("Service was null");
 			}
-			Integer id = tableViewModelo.getSelectionModel().getSelectedItem().getId();
-			Modelo obj = service.findById(id);
-			return obj;
+			if(tableViewModelo.getSelectionModel().getSelectedItem() == null) {
+				Alerts.showAlert("Item not selected", null,"Ops! você esqueceu de selecionar um veículo!", AlertType.INFORMATION);
+			}
+			
+			Modelo obj = tableViewModelo.getSelectionModel().getSelectedItem();
+			
+			return service.findById(obj);
 		}
 		
 		private void InicializeNodes() {
