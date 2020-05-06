@@ -77,8 +77,22 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st=null;
+		ResultSet rs = null;
 		
+		try {
+		st = conn.prepareStatement("DELETE FROM marca WHERE id_marca=?");
+		
+		st.setInt(1,id);
+		
+		st.execute();
+	
+		}catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+		    DB.closeResultset(rs);
+		    DB.closeStatement(st);
+		}
 	}
 
 	@Override

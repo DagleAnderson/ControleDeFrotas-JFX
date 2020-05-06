@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+
 import db.DBException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -75,6 +76,7 @@ public class ModeloFormController implements Initializable {
 		
 	}
 	
+	
 	public void onBtnGravarAction( ActionEvent event) {
 		if(entity == null) {
 			throw new IllegalStateException("Entity was null");
@@ -104,16 +106,20 @@ public class ModeloFormController implements Initializable {
 	private Modelo getFormData() {
 		ValidationException exception = new ValidationException("validation error");
 		
-		Modelo obj = new Modelo();
-		obj.setId(Utils.tryParseToInt(txtId.getText()));
-		
-		if(txtDesc.getText() == null || txtDesc.getText().trim().equals("")) {
-			exception.addError("descricao", "");
-		}
-		obj.setDescricao(txtDesc.getText());
-		
-		
-		if(exception.getErrors().size() > 0 ) {
+			Modelo obj = new Modelo();
+			obj.setId(Utils.tryParseToInt(txtId.getText()));
+			if(txtDesc.getText() == null || txtDesc.getText().trim().equals("")) {
+				exception.addError("descricao", "");
+			}
+			obj.setDescricao(txtDesc.getText());
+			if(cbxMarca.getValue() == null) {
+				exception.addError("marca", "");
+			}
+					
+			obj.setMarca(cbxMarca.getValue());
+
+			
+		if(exception.getErrors().size() > 0){
 			throw exception;
 		}
 		
@@ -127,7 +133,9 @@ public class ModeloFormController implements Initializable {
 			throw new IllegalStateException("Departamento was null");
 		}
 		List<Marca> listMarca = marcaService.findAll();
+		
 		obsListMarca = FXCollections.observableArrayList(listMarca);
+		
 		cbxMarca.setItems(obsListMarca);
 	}
 	
@@ -158,7 +166,7 @@ public class ModeloFormController implements Initializable {
 		txtDesc.setText(entity.getDescricao());
 		if(cbxMarca == null) {
 			cbxMarca.getSelectionModel().selectFirst();
-		}
+		}		
 		cbxMarca.setValue(entity.getMarca());
 	}
 	
@@ -166,6 +174,8 @@ public class ModeloFormController implements Initializable {
 		//regras de negócio da classe Constraints de gui/utils
 		Constraints.setTextFieldInteger(txtId);
 		Constraints.setTextFieldMaxLength(txtDesc, 30);
+		
+		this.initializeComboBoxMarca();
 	}
 	
 
@@ -189,8 +199,6 @@ public class ModeloFormController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.initializeNodes();
-		this.initializeComboBoxMarca();
-
 	}
 	
 }

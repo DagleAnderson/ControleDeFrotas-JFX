@@ -43,7 +43,7 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 				 		st.setString(4, obj.getPlaca());
 				 		st.setString(5, obj.getChassi());
 				 		st.setString(6, obj.getRenavam());
-				 		st.setInt(7, 1);
+				 		st.setInt(7, obj.getModelo().getId());
 				 		
 				 int rowsAffected = st.executeUpdate();
 				 	
@@ -102,8 +102,24 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	}
 
 	@Override
-	public void deleteById(Integer id) {
-		// TODO Auto-generated method stub
+	public void delete(Integer id) {
+		// TODO Auto-generated method stu
+		PreparedStatement  st = null;
+		
+		try {
+			
+			st = conn.prepareStatement("DELETE FROM veiculo WHERE id_veic = ?");
+			
+			st.setInt(1,id);
+			
+			st.execute();
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+		}finally{
+			
+		}
+		
 		
 	}
 

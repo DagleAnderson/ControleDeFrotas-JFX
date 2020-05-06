@@ -7,13 +7,13 @@ public class Marca  implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private  String descricao;
+	private String descricao;
 	
 	public Marca() {
 		
 	}
 	
-	public Marca(int id,String desc) {
+	public Marca(Integer id,String desc) {
 		this.id = id;
 		this.descricao = desc;
 	}
@@ -59,7 +59,6 @@ public class Marca  implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return getDescricao();
+		return  this.descricao ;
 	}
-	
 }

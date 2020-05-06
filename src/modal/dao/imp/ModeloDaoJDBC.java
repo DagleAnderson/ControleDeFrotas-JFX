@@ -30,12 +30,14 @@ public class ModeloDaoJDBC implements ModeloDao{
 		PreparedStatement st = null;
 		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement("INSERT INTO modelo "+
+			st = conn.prepareStatement("INSERT INTO modelo"+
 					"(nome_mod,marca_id) "+
 					"VALUES(?,?)",Statement.RETURN_GENERATED_KEYS);
 		
 		st.setString(1, obj.getDescricao());
-		st.setInt(2, 1);
+		st.setInt(2, obj.getMarca().getId());
+		
+		System.out.println(obj.getMarca().getId());
 		
 		 int rowsAffected = st.executeUpdate();
 		 	
@@ -69,7 +71,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 					+" nome_mod=?,marca_id=?  WHERE id_mod = ?");
 		
 		st.setString(1,obj.getDescricao());
-		st.setInt(2, 1);
+		st.setInt(2, obj.getMarca().getId());
 		
 		st.setInt(3,obj.getId());
 			
@@ -86,7 +88,22 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		PreparedStatement st=null;
+		ResultSet rs = null;
+		
+		try {
+		st = conn.prepareStatement("DELETE FROM modelo WHERE id_mod=?");
+		
+		st.setInt(1,id);
+		
+		st.execute();
+	
+		}catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+		    DB.closeResultset(rs);
+		    DB.closeStatement(st);
+		}
 		
 	}
 
@@ -153,6 +170,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 	private Marca instantiateMarca(ResultSet rs) {
 		try {
 			Marca marca = new Marca();
+			marca.setId(rs.getInt("marca_id"));
 			marca.setDescricao(rs.getString("marca"));
 			return marca;
 		}catch(SQLException e) {

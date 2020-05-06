@@ -3,8 +3,13 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import com.mysql.cj.conf.ConnectionUrl.Type;
+
+import db.DBException;
+import db.DBIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -15,6 +20,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -84,7 +90,22 @@ public class ModeloListController implements Initializable,DataChangeListener{
 
 		@FXML 
 		public void onBtnExcluirAction() {
-			System.out.println("excluir Modelo");
+			 Optional<ButtonType> result = Alerts.showConfirmation("Confirmation","Deseja confirmar essa operação?");
+			if(result.get() == ButtonType.OK) {
+				Modelo obj = getSelectedModelo();
+				
+				if(service == null) {
+					throw  new IllegalArgumentException("Service was null");
+				}
+				
+				try {
+					this.service.remove(obj);
+					this.updateTableView();
+				}catch (DBIntegrityException e) {//DBIntegrityException
+					 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
+				}
+				
+			}	
 		}
 		
 		@FXML 

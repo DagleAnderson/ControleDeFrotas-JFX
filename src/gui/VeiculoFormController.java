@@ -24,7 +24,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.util.Callback;
-import model.entities.Marca;
 import model.entities.Modelo;
 import model.entities.Veiculo;
 import model.exceptions.ValidationException;
@@ -72,6 +71,7 @@ public class VeiculoFormController implements Initializable {
 		@FXML
 		private Button btnCancelar;
 		
+		
 		private ObservableList<Modelo> obsListModelo;
 	
 		
@@ -116,8 +116,17 @@ public class VeiculoFormController implements Initializable {
 			}
 		}
 		
+		@FXML
 		public void onBtnCancelarAction(ActionEvent event){
 			Utils.currentStage(event).close();
+		}
+		
+		@FXML
+		public void onCbxModeloAction() {
+			if(entity == null) {
+				throw new IllegalStateException("Entity new null");
+			}
+			txtMarca.setText(cbxModelo.getValue().getMarca().getDescricao());
 		}
 		
 
@@ -140,7 +149,7 @@ public class VeiculoFormController implements Initializable {
 			
 			
 			obj.setDescricao(txtDescricao.getText());
-			obj.setModelo(new Modelo(1,"Truck",new Marca(1,"Wolksvagem"))/*ação temporária*/);
+			obj.setModelo(cbxModelo.getValue());
 			obj.setAno(txtAno.getText());
 			obj.setChassi(txtChassi.getText());
 			obj.setKmRodado(Utils.tryParseToDouble(txtKmRodado.getText()));
@@ -188,11 +197,6 @@ public class VeiculoFormController implements Initializable {
 				txtPlaca.setStyle("-fx-border-color: #f00");
 			}
 		}
-
-		@FXML
-		public void onBtnCancelarAction() {
-			System.out.println("cancelar");
-		}
 		
 		public void updateFormData(){ // atualizar form ao abrir edição de veiculo cadastrado
 			if(entity == null) {
@@ -201,7 +205,7 @@ public class VeiculoFormController implements Initializable {
 			
 			txtId.setText(String.valueOf(entity.getId()));
 			txtDescricao.setText(entity.getDescricao());
-			//comboModelo.setItems();
+			cbxModelo.setValue(entity.getModelo());
 			txtMarca.setText(entity.getModelo().getMarca().getDescricao());
 			txtAno.setText(entity.getAno());
 			txtKmRodado.setText(String.valueOf(entity.getKmRodado()));
@@ -211,10 +215,11 @@ public class VeiculoFormController implements Initializable {
 			if(entity.getModelo() == null) {
 				cbxModelo.getSelectionModel().selectFirst();
 			}
-			cbxModelo.setValue(entity.getModelo());
+
+		
 			
 		}
-		
+	
 		
 		//Controlar tipo e quantidade dos nodes(campos)
 		public void initicalizeNodes() {

@@ -3,9 +3,11 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
-
+import db.DBException;
+import db.DBIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
 import gui.util.Utils;
@@ -17,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -79,7 +82,21 @@ public class MarcaListController implements Initializable,DataChangeListener {
 	}
 
 	public void onBtnExcluirAction() {
-		System.out.println("excluir");
+		Optional<ButtonType> result =  Alerts.showConfirmation("Confirmation", "Deseja confirmar essa operação?");
+		if(result.get() ==ButtonType.OK) {	
+			Marca obj = getSelectedMarca();
+			
+			if(service == null) {
+				throw new IllegalStateException("Services was null");
+			}
+			
+			try {
+				this.service.remove(obj);
+				this.updateTableView();
+			}catch (DBIntegrityException e) {//DBIntegrityException
+				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
+			}
+		}	
 	}
 	
 	public void onBtnSairAction() {

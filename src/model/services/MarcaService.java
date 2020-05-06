@@ -23,6 +23,9 @@ public class MarcaService {
 		return this.marcaDao.findById(id);
 	}
 	
+	public void remove(Marca obj) {
+		this.marcaDao.delete(obj.getId());
+	}
 	
 	public List<Marca> findAll(){
 		return marcaDao.findAll();

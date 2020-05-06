@@ -55,7 +55,7 @@
                   </Label>
                   <TextField fx:id="txtId" editable="false" GridPane.columnIndex="1" />
                   <TextField fx:id="txtDesc" prefHeight="25.0" prefWidth="256.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <ComboBox fx:id="cbxMarca" editable="true" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cbxMarca" prefHeight="25.0" prefWidth="279.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="104.0" text="Marca" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />

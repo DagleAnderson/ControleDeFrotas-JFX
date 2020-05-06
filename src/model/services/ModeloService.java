@@ -23,6 +23,10 @@ public class ModeloService {
 		return modDao.findById(id);
 	}
 	
+	public void remove(Modelo obj) {
+	     this.modDao.delete(obj.getId());
+	}
+	
 	
 	public List<Modelo> findAll(){
 		return modDao.findAll();
