@@ -21,6 +21,8 @@ import model.dao.VeiculoDao;
 public class VeiculoDaoJDBC implements VeiculoDao{
 
 	private Connection conn;
+	private PreparedStatement  st = null;
+	private ResultSet rs = null;
 	
 	public VeiculoDaoJDBC(Connection conection){
 		this.conn = conection;
@@ -28,8 +30,6 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	
 	@Override
 	public void insert(Veiculo obj) {
-		 PreparedStatement st = null;
-		 ResultSet rs = null;
 		 
 			 try {
 				 st = conn.prepareStatement(
@@ -70,8 +70,6 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 
 	@Override
 	public void update(Veiculo obj) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
 		
 		try {
 			st = conn.prepareStatement(
@@ -104,7 +102,6 @@ public class VeiculoDaoJDBC implements VeiculoDao{
 	@Override
 	public void delete(Integer id) {
 		// TODO Auto-generated method stu
-		PreparedStatement  st = null;
 		
 		try {
 			

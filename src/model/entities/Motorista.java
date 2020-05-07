@@ -1,8 +1,15 @@
 package model.entities;
 
+import java.util.Date;
+
 public class Motorista {
 	 private Integer id;
 	 private String nome;
+	 private String sobreNome;
+	 private Date dataNascimento;
+	 private String cpf;
+	 private String rg;
+	 private String cnh;
 	 private String telefone;
 	 private String email;
 	 private Endereco endereco;
@@ -11,9 +18,15 @@ public class Motorista {
 		 
 	 }
 
-	public Motorista(Integer id, String nome, String telefone, String email,Endereco endereco) {
+	public Motorista(Integer id, String nome, String sobreNome, Date dataNascimento, String cpf, String rg, String cnh,
+			String telefone, String email, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
+		this.sobreNome = sobreNome;
+		this.dataNascimento = dataNascimento;
+		this.cpf = cpf;
+		this.rg = rg;
+		this.cnh = cnh;
 		this.telefone = telefone;
 		this.email = email;
 		this.endereco = endereco;
@@ -58,6 +71,48 @@ public class Motorista {
 
 	public void setNome(String nome) {
 		this.nome = nome;
+	}
+	
+
+	public String getSobreNome() {
+		return sobreNome;
+	}
+
+	public void setSobreNome(String sobreNome) {
+		this.sobreNome = sobreNome;
+	}
+	
+	
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getRg() {
+		return rg;
+	}
+
+	public void setRg(String rg) {
+		this.rg = rg;
+	}
+
+	public String getCnh() {
+		return cnh;
+	}
+
+	public void setCnh(String cnh) {
+		this.cnh = cnh;
 	}
 
 	public String getTelefone() {

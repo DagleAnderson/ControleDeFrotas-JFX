@@ -10,8 +10,12 @@ public class MotoristaService {
 		
 	MotoristaDao motDao = DaoFactory.createMotoristaDao();
 
-	public void saveOrUpdate(Motorista motorista) {
-		
+	public void saveOrUpdate(Motorista obj) {
+		if(obj.getId() == null) {
+			motDao.insert(obj);
+		}else {
+			motDao.update(obj);
+		}
 	}
 	
 	public Motorista findById(Motorista obj) {

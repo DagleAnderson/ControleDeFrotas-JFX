@@ -16,6 +16,8 @@ import model.entities.Marca;
 public class MarcaDaoJDBC implements MarcaDao {
 	
 	Connection conn;
+	 private PreparedStatement  st = null;
+	 private ResultSet rs = null;
 	
 	public MarcaDaoJDBC(Connection conexao){
 		this.conn = conexao;
@@ -23,8 +25,7 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void insert(Marca obj) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
+		
 		try {
 			st = conn.prepareStatement("INSERT INTO"
 					+" marca(nome_marca) VALUES(?)",Statement.RETURN_GENERATED_KEYS);
@@ -56,8 +57,6 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void update(Marca obj) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
 		
 		try {
 			st = conn.prepareStatement("UPDATE marca SET"
@@ -77,8 +76,6 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public void delete(Integer id) {
-		PreparedStatement st=null;
-		ResultSet rs = null;
 		
 		try {
 		st = conn.prepareStatement("DELETE FROM marca WHERE id_marca=?");
@@ -97,8 +94,7 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public Marca findById(Integer id) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
+	
 		try {
 			st = conn.prepareStatement("SELECT * FROM marca  WHERE id_marca = ?");
 
@@ -122,8 +118,7 @@ public class MarcaDaoJDBC implements MarcaDao {
 
 	@Override
 	public List<Marca> findAll() {
-		PreparedStatement st = null;
-		ResultSet rs = null;
+
 		try {
 			st = conn.prepareStatement("SELECT * FROM marca");
 			rs = st.executeQuery();

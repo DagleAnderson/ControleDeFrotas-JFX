@@ -19,7 +19,8 @@ import model.entities.Modelo;
 public class ModeloDaoJDBC implements ModeloDao{
 	
 	Connection conn;
-	
+	private PreparedStatement  st = null;
+	private ResultSet rs = null;
 	
 	public ModeloDaoJDBC( Connection connection) {
 		this.conn = connection;
@@ -27,8 +28,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public void insert(Modelo obj) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
+
 		try {
 			st = conn.prepareStatement("INSERT INTO modelo"+
 					"(nome_mod,marca_id) "+
@@ -63,8 +63,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public void update(Modelo obj) {
-		PreparedStatement st  = null;
-		ResultSet rs = null;
+		
 		try {
 			
 			st = conn.prepareStatement("UPDATE modelo SET"
@@ -88,8 +87,6 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public void delete(Integer id) {
-		PreparedStatement st=null;
-		ResultSet rs = null;
 		
 		try {
 		st = conn.prepareStatement("DELETE FROM modelo WHERE id_mod=?");
@@ -109,8 +106,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public Modelo findById(Integer id) {
-		PreparedStatement st = null;
-		ResultSet rs = null;
+		
 		try {
 			st = conn.prepareStatement("SELECT modelo.*,marca.nome_marca as marca FROM modelo"
 					+ " INNER JOIN marca ON modelo.marca_id = marca.id_marca"
@@ -137,8 +133,7 @@ public class ModeloDaoJDBC implements ModeloDao{
 	@Override
 	public List<Modelo> findAll() {
 			
-			PreparedStatement st = null;
-			ResultSet rs = null;
+		
 		try {	
 				st  = conn.prepareStatement("SELECT modelo.* ,marca.nome_marca as marca FROM modelo" +
 						" INNER JOIN marca ON modelo.marca_id = marca.id_marca");
