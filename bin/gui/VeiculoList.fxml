@@ -23,14 +23,14 @@
       <TextField prefHeight="25.0" prefWidth="449.0" />
       <TableView fx:id="tableViewVeiculo" prefHeight="244.0" prefWidth="645.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Código" />
-          <TableColumn fx:id="tableColumnDesc" prefWidth="174.0" text="Descrição" />
-            <TableColumn fx:id="tableColumnPlaca" minWidth="0.0" prefWidth="141.0" text="Placa" />
-            <TableColumn fx:id="tableColumnRenavam" prefWidth="110.0" text="RENAVAM" />
-            <TableColumn fx:id="tableColumnMod" prefWidth="143.0" text="Modelo" />
+          <TableColumn fx:id="tableColumnId" editable="false" prefWidth="75.0" text="Código" />
+          <TableColumn fx:id="tableColumnDesc" editable="false" prefWidth="174.0" text="Descrição" />
+            <TableColumn fx:id="tableColumnPlaca" editable="false" minWidth="0.0" prefWidth="141.0" text="Placa" />
+            <TableColumn fx:id="tableColumnRenavam" editable="false" prefWidth="110.0" text="RENAVAM" />
+            <TableColumn fx:id="tableColumnMod" editable="false" prefWidth="143.0" text="Modelo" />
         </columns>
       </TableView>
-      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;">
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #51C2BC;">
         <buttons>
             <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
                <font>

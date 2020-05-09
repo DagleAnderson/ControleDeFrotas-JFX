@@ -15,7 +15,7 @@
 
 <AnchorPane prefHeight="262.0" prefWidth="485.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ModeloFormController">
    <children>
-      <ButtonBar layoutX="1.0" layoutY="222.0" prefHeight="40.0" prefWidth="485.0" style="-fx-background-color: #4dcb99;">
+      <ButtonBar layoutX="1.0" layoutY="222.0" prefHeight="40.0" prefWidth="485.0" style="-fx-background-color: #51C2BC;">
         <buttons>
           <Button fx:id="btnGravar" minWidth="11.0" mnemonicParsing="false" onAction="#onBtnGravarAction" prefHeight="25.0" style="-fx-background-radius: 10px;" text="Gravar" translateX="-25.0">
                <font>

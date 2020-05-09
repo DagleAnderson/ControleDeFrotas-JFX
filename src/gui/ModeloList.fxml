@@ -23,12 +23,12 @@
       <TextField fx:id="txtPesquisar" />
       <TableView fx:id="tableViewModelo" prefHeight="244.0" prefWidth="645.0">
         <columns>
-          <TableColumn fx:id="tableColumnId" prefWidth="75.0" text="Código" />
-          <TableColumn fx:id="tableColumnDesc" prefWidth="322.0" text="Descrição" />
-            <TableColumn fx:id="tableColumnMarca" prefWidth="75.0" text="Marca" />
+          <TableColumn fx:id="tableColumnId" editable="false" prefWidth="75.0" text="Código" />
+          <TableColumn fx:id="tableColumnDesc" editable="false" prefWidth="322.0" text="Descrição" />
+            <TableColumn fx:id="tableColumnMarca" editable="false" prefWidth="75.0" text="Marca" />
         </columns>
       </TableView>
-      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #4dcb99;">
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #51C2BC;">
         <buttons>
           <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
                <font>

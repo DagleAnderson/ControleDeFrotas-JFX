@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
+
 
 import db.DB;
 import db.DBException;
@@ -57,7 +59,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			
 		}catch (SQLException e) {
-			throw new DBException("Erro SQL de banco de dados:"+ e.getMessage());
+			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
 			DB.closeStatement(st);
@@ -87,7 +89,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			st.setInt(8, obj.getId());
 			
 		} catch (Exception e) {
-			throw new DBException("Erro SQL de banco de dados:" + e.getMessage());
+			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
 			DB.closeStatement(st);
@@ -110,8 +112,43 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 
 	@Override
 	public List<Motorista> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			
+			st = conn.prepareStatement("SELECT mot.id_motor, mot.nome_motor,mot.tel_motor FROM motorista as mot");
+			
+			rs = st.executeQuery();
+			
+			List<Motorista> motoristas = new ArrayList<>();
+			
+			while (rs.next()) {
+				 
+				Motorista motorista = instanteateMotorista(rs); 
+				motoristas.add(motorista);
+				
+			}
+			return motoristas;
+			
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
+	}
+
+	private Motorista instanteateMotorista(ResultSet rs) {
+		try {
+			Motorista mot = new Motorista();
+			mot.setId(rs.getInt("id_motor"));
+			mot.setNome(rs.getString("nome_motor"));
+			mot.setTelefone(rs.getString("tel_motor"));
+		
+			return mot;
+			
+			
+		} catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}
 	}
 	
 }

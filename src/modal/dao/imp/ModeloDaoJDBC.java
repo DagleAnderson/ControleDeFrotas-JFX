@@ -132,8 +132,6 @@ public class ModeloDaoJDBC implements ModeloDao{
 
 	@Override
 	public List<Modelo> findAll() {
-			
-		
 		try {	
 				st  = conn.prepareStatement("SELECT modelo.* ,marca.nome_marca as marca FROM modelo" +
 						" INNER JOIN marca ON modelo.marca_id = marca.id_marca");
@@ -159,6 +157,9 @@ public class ModeloDaoJDBC implements ModeloDao{
 				
 		}catch(SQLException e) {
 			 throw new DBException(e.getMessage()) ;
+		}finally {
+			DB.closeStatement(st);
+			DB.closeResultset(rs);
 		}
 	}
 

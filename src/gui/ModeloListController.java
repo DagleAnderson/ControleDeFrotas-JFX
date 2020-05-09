@@ -5,10 +5,6 @@ import java.net.URL;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import com.mysql.cj.conf.ConnectionUrl.Type;
-
-import db.DBException;
 import db.DBIntegrityException;
 import gui.listeners.DataChangeListener;
 import gui.util.Alerts;
@@ -143,14 +139,14 @@ public class ModeloListController implements Initializable,DataChangeListener{
 			
 		}
 		
-		//atualizador de dados do banco para a View
-		public void updateTableView() {
+		//atualizador de dados do banco para a View . Metodo chamado na class anterior (MainViewController)
+		public void updateTableView() {  
 			if(service == null) {
 				throw new IllegalStateException("Service was null");
 			}
 			
-			List<Modelo> list  = service.findAll();
-				obsList = FXCollections.observableArrayList(list);
+			List<Modelo> modelos = service.findAll();
+				obsList = FXCollections.observableArrayList(modelos);
 				
 				tableViewModelo.setItems(obsList);
 				tableViewModelo.refresh();

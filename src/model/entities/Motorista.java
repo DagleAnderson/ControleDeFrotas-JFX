@@ -1,9 +1,12 @@
 package model.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Motorista {
-	 private Integer id;
+public class Motorista implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private Integer id;
 	 private String nome;
 	 private String sobreNome;
 	 private Date dataNascimento;

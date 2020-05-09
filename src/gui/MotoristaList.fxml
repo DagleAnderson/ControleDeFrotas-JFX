@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="365.0" prefWidth="645.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MotoristaListController">
+   <children>
+      <Label prefHeight="20.0" prefWidth="645.0" style="-fx-background-color: #ddd;" text="Dados Motorista">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label text="Pesquisar">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <TextField prefHeight="25.0" prefWidth="449.0" />
+      <TableView fx:id="tableViewMotorista" prefHeight="244.0" prefWidth="645.0">
+        <columns>
+          <TableColumn fx:id="tableColumnId" editable="false" prefWidth="75.0" text="Código" />
+          <TableColumn fx:id="tableColumnNome" editable="false" prefWidth="210.0" text="Nome" />
+            <TableColumn fx:id="tableColumnTelefone" editable="false" minWidth="0.0" prefWidth="204.0" text="telefone" />
+        </columns>
+      </TableView>
+      <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #51C2BC;">
+        <buttons>
+            <Button fx:id="btnNovo" mnemonicParsing="false" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+          <Button fx:id="btnEditar" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Editar" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="btnExcluir" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Excluir" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button fx:id="btnSair" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Sair" translateX="-30.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+        </buttons>
+      </ButtonBar>
+   </children>
+</VBox>

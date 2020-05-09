@@ -2,11 +2,11 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox prefHeight="175.0" prefWidth="343.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<VBox prefHeight="175.0" prefWidth="343.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label prefHeight="70.0" prefWidth="345.0" text="Sistema Desenvolvido por">
          <font>
@@ -24,5 +24,6 @@
             <Insets left="120.0" />
          </padding>
       </Label>
+      <ImageView fitHeight="150.0" fitWidth="345.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </VBox>

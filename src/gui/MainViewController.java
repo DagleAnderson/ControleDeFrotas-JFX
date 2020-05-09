@@ -18,6 +18,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import model.services.MarcaService;
 import model.services.ModeloService;
+import model.services.MotoristaService;
 import model.services.VeiculoService;
 
 public class MainViewController implements Initializable {
@@ -40,12 +41,15 @@ public class MainViewController implements Initializable {
 	
 	@FXML
 	public void onMenuItemMotoristaAction() {
-		System.out.println("Motorista");
+	LoadView("/gui/MotoristaList.fxml", (MotoristaListController controller) ->{
+		controller.setMotoristaService(new MotoristaService());
+		controller.updateTableView();
+	});	
 	}
 	
 	@FXML
 	public void onMenuItemVeiculoAction() {
-		LoadView("/gui/VeiculoList.fxml",(VeiculoListController controller)->{
+		LoadView("/gui/VeiculoList.fxml",(VeiculoListController controller)->{ //Expressão Lambda executada para passar  o servoce e atualizar a tabela da Lista 
 			controller.setVeiculoService(new VeiculoService());
 			controller.updateTableView();
 		});

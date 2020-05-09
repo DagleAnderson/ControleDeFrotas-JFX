@@ -27,10 +27,9 @@ public class MotoristaService {
 		
 	}
 	
-public List<Motorista> findAll(Motorista obj){
-		
-		return null;
-	}
+	public List<Motorista> findAll(){
+		 return motDao.findAll();
+		}
 	
 }
 
