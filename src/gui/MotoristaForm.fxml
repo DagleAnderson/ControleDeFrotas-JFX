@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="459.0" prefWidth="659.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.MotoristaFormController">
+   <children>
+      <Pane layoutX="29.0" layoutY="41.0" prefHeight="175.0" prefWidth="603.0" style="-fx-border-color: #ccc; -fx-border-radius: 10px;">
+         <children>
+            <GridPane layoutX="12.0" layoutY="7.0" prefHeight="159.0" prefWidth="579.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.0" minWidth="10.0" prefWidth="66.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="345.0" minWidth="10.0" prefWidth="159.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="139.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="162.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="370.0" minWidth="10.0" prefWidth="52.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="52.0" text="ID" />
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="53.0" text="Nome" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <TextField fx:id="txtId" editable="false" prefHeight="25.0" prefWidth="225.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtNome" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="129.0" text="Data nascimento" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="125.0" text="RG" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="54.0" text="CPF" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <TextField fx:id="txtRg" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  <DatePicker fx:id="dpDataNasc" editable="false" GridPane.columnIndex="3" />
+                  <TextField fx:id="txtCpf" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="129.0" text="Sobrenome" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtSobrenome" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="57.0" text="Telefone" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="127.0" text="CNH" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtTelefone" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtCnh" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <ButtonBar layoutX="-6.0" layoutY="405.0" prefHeight="54.0" prefWidth="665.0" style="-fx-background-color: #51C2BC;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="-6.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="405.0">
+        <buttons>
+          <Button fx:id="btnGravar" mnemonicParsing="false" onAction="#onBtnGravarAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Gravar" translateX="-30.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#onBtnCancelarAction" style="-fx-background-radius: 10px;" text="Cancelar" translateX="-25.0">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+        </buttons>
+      </ButtonBar>
+      <Pane layoutX="28.0" layoutY="258.0" prefHeight="136.0" prefWidth="603.0" style="-fx-border-color: #CCC; -fx-border-radius: 10px;">
+         <children>
+            <GridPane layoutX="7.0" layoutY="7.0" prefHeight="76.0" prefWidth="579.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="136.0" minWidth="10.0" prefWidth="70.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="253.0" minWidth="10.0" prefWidth="191.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="34.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="55.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="63.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="334.0" minWidth="10.0" prefWidth="164.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="66.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="46.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="62.0" text="Cidade">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtKmRodado" prefHeight="25.0" prefWidth="121.0" GridPane.columnIndex="1" />
+                  <TextField fx:id="txtPlaca" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="25.0" text="UF" GridPane.columnIndex="2">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtChassi" GridPane.columnIndex="3" />
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="63.0" text="Rua" textAlignment="RIGHT" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="27.0" text="Nº" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="55.0" text="Bairro" GridPane.columnIndex="4">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="54.0" text="CEP" GridPane.columnIndex="4" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label />
+                  <TextField GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <TextField GridPane.columnIndex="5" GridPane.rowIndex="1" />
+                  <TextField prefHeight="25.0" prefWidth="160.0" GridPane.columnIndex="5" />
+               </children>
+            </GridPane>
+            <GridPane layoutX="-1.0" layoutY="92.0" prefHeight="30.0" prefWidth="587.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="271.0" minWidth="10.0" prefWidth="106.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="485.0" minWidth="10.0" prefWidth="481.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="TOP_RIGHT" prefHeight="20.0" prefWidth="102.0" text="Complemento">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="488.0" GridPane.columnIndex="1" />
+               </children>
+            </GridPane>
+         </children>
+      </Pane>
+      <Label alignment="CENTER" layoutX="29.0" layoutY="16.0" prefHeight="20.0" prefWidth="233.0" style="-fx-background-color: #CCC; -fx-background-radius: 10px;" text="Dados Gerais">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="29.0" layoutY="227.0" prefHeight="20.0" prefWidth="233.0" style="-fx-background-color: #CCC; -fx-background-radius: 10px;" text="Endereço">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="2.0" layoutY="397.0" prefHeight="8.0" prefWidth="657.0" />
+   </children>
+   <cursor>
+      <Cursor fx:constant="DEFAULT" />
+   </cursor>
+</AnchorPane>

@@ -7,7 +7,9 @@ import javafx.stage.Stage;
 public class Utils {
 	
 	public static Stage currentStage(ActionEvent event) {
-		//Pega o Palco pai para passar como parâmetro nas telas de diálogo
+		//Pega o Palco pai para passar como parâmetro nas telas de diálogo;
+		/* event.getSource retorna um Object -> faz-se um cast para um tipo Node 
+			-> faz um get da Scene -> faz-se um cast para um Stage .(Segue Arquitetura JavaFX)*/
 		return  (Stage) ((Node) event.getSource()).getScene().getWindow();
 	}
 	

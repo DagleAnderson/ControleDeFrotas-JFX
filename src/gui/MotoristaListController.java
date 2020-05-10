@@ -6,14 +6,22 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.entities.Motorista;
 import model.services.MotoristaService;
 
@@ -60,8 +68,11 @@ public class MotoristaListController implements Initializable {
 		this.service = service;
 	}
 	
-	public void onBtnNovoAction() {
+	public void onBtnNovoAction(ActionEvent event){
+		Stage parentStage = Utils.currentStage(event);
+		Motorista obj = new Motorista();
 		
+		createDialogForm(obj,"/gui/MotoristaForm.fxml",parentStage);
 	}	
 	
 	public void onBtnEditarAction() {
@@ -81,6 +92,31 @@ public class MotoristaListController implements Initializable {
 		tableViewMotorista.refresh();
 	}
 	
+	private void createDialogForm(Motorista obj, String absoluteName, Stage parentStage) {
+		
+		try {
+		FXMLLoader loader  = new FXMLLoader(getClass().getResource(absoluteName));
+			Pane pane =  loader.load();
+			
+			MotoristaFormController controller = new MotoristaFormController();
+				controller.setMotorista(obj);
+				controller.setMotoristaService(service);
+				
+				Stage dialogStage = new Stage();//Novo Palco 
+				dialogStage.setTitle("Dados de Motorista");//titulo da Stage
+				dialogStage.setScene(new Scene(pane));//Nova cena  passando o palco como parâmetro
+				dialogStage.setResizable(false);//bloquear redimensionamento
+				dialogStage.initOwner(parentStage); // Stage Pai que da origem ao Stage que será chamado
+				dialogStage.initModality(Modality.WINDOW_MODAL);//Model - Enquanto  janela estiver aberta a inferir estará inacessível
+				dialogStage.showAndWait(); // carregar form na tela
+			
+		}catch (IOException e) {
+			Alerts.showAlert("IOExeption", "Erro loading View", e.getMessage(), AlertType.ERROR );
+		}
+			
+		
+	}
+
 	
 	public void initializeNodes(){
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));

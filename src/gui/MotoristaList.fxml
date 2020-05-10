@@ -30,15 +30,15 @@
       </TableView>
       <ButtonBar prefHeight="59.0" prefWidth="663.0" style="-fx-background-color: #51C2BC;">
         <buttons>
-            <Button fx:id="btnNovo" mnemonicParsing="false" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
+            <Button fx:id="btnNovo" mnemonicParsing="false" onAction="#onBtnNovoAction" prefHeight="27.0" prefWidth="95.0" style="-fx-background-radius: 10px;" text="Novo" translateX="-30.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
-          <Button fx:id="btnEditar" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Editar" translateX="-30.0">
+          <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#onBtnEditarAction" style="-fx-background-radius: 10px;" text="Editar" translateX="-30.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
-            <Button fx:id="btnExcluir" mnemonicParsing="false" style="-fx-background-radius: 10px;" text="Excluir" translateX="-30.0">
+            <Button fx:id="btnExcluir" mnemonicParsing="false" onAction="#onBtnExcluirAction" style="-fx-background-radius: 10px;" text="Excluir" translateX="-30.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
