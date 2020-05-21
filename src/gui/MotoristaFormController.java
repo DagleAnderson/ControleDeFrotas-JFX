@@ -3,7 +3,9 @@ package gui;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gui.util.Constraints;
 import gui.util.MaskFieldUtils;
+import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -72,6 +74,15 @@ public class MotoristaFormController implements Initializable{
 		MaskFieldUtils.cpfField(txtCpf);
 		MaskFieldUtils.foneField(txtTelefone);
 		//MaskFieldUtils.cepField(txtCep);
+			
+	}
+	
+	public void initializeNodes() {
+		Constraints.setTextFieldInteger(txtId);
+		Constraints.setTextFieldMaxLength(txtNome, 15);
+		Constraints.setTextFieldMaxLength(txtSobrenome, 20);
+		Utils.formatDatePicker(dpDataNasc, "dd/MM/yyyy");
+		
 		
 	}
 	@Override
