@@ -11,7 +11,6 @@ public class Motorista implements Serializable {
 	 private String sobreNome;
 	 private Date dataNascimento;
 	 private String cpf;
-	 private String rg;
 	 private String cnh;
 	 private String telefone;
 	 private String email;
@@ -21,14 +20,13 @@ public class Motorista implements Serializable {
 		 
 	 }
 
-	public Motorista(Integer id, String nome, String sobreNome, Date dataNascimento, String cpf, String rg, String cnh,
+	public Motorista(Integer id, String nome, String sobreNome, Date dataNascimento, String cpf, String cnh,
 			String telefone, String email, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
 		this.sobreNome = sobreNome;
 		this.dataNascimento = dataNascimento;
 		this.cpf = cpf;
-		this.rg = rg;
 		this.cnh = cnh;
 		this.telefone = telefone;
 		this.email = email;
@@ -100,14 +98,6 @@ public class Motorista implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
-	}
-
-	public String getRg() {
-		return rg;
-	}
-
-	public void setRg(String rg) {
-		this.rg = rg;
 	}
 
 	public String getCnh() {

@@ -34,16 +34,17 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 		
 		try {
 			st = conn.prepareStatement("INSERT INTO "
-			+ " motorista(nome_motor,sobrenome_moto,dataNasc_motor,cpf_motor,rg_motor,tel_motor,cnh_motor) "
-			+ " VALUES(?,?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
+			+ " motorista(nome_motor,sobrenome_motor,dataNasc_motor,cpf_motor,cnh_motor,tel_motor,email_motor)"
+			+ " VALUES(?,?,?,?,?,?,?)",Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
 			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
 			st.setString(4, obj.getCpf());
-			st.setString(5, obj.getRg());
+			st.setString(5,obj.getCnh());
 			st.setString(6, obj.getTelefone());
-			st.setString(7,obj.getCnh());
+			st.setString(7,obj.getEmail());
+
 			;
 			
 			int rowsAffected = st.executeUpdate();
@@ -75,16 +76,16 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 		try {
 			
 			st = conn.prepareStatement("UPDATE motorista SET "
-			 + " nome_motor = ? , sobrenome_moto = ?, dataNasc_motor = ?, cpf_motor = ?, rg_motor = ?,tel_motor = ?, cnh_motor = ?"
+			 + " nome_motor = ? , sobrenome_motor = ?, dataNasc_motor = ?, cpf_motor = ?, cnh_motor = ?,tel_motor = ?,email_motor"
 			 + " WHERE id_motor = ? ");
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
 			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
 			st.setString(4, obj.getCpf());
-			st.setString(5, obj.getRg());
+			st.setString(5, obj.getCnh());
 			st.setString(6, obj.getTelefone());
-			st.setString(7, obj.getCnh());
+			st.setString(7, obj.getEmail());
 			
 			st.setInt(8, obj.getId());
 			

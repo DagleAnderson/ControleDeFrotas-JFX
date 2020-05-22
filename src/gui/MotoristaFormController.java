@@ -33,11 +33,12 @@ public class MotoristaFormController implements Initializable{
 	@FXML
 	private TextField txtCpf;
 	@FXML
-	private TextField txtRg;
+	private TextField txtCnh;
 	@FXML
 	private TextField txtTelefone;
 	@FXML
-	private TextField txtCnh;
+	private TextField txtEmail;
+
 	
 	
 	//buttons
@@ -87,7 +88,8 @@ public class MotoristaFormController implements Initializable{
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
+		this.MaskInitialize();
+		this.initializeNodes();
 		
 	}
 	
