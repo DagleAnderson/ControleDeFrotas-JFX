@@ -52,7 +52,7 @@
                      <font>
                         <Font size="14.0" />
                      </font></Label>
-                  <TextField fx:id="txtEmail" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                  <TextField fx:id="txtEmail" GridPane.columnIndex="3" GridPane.rowIndex="3" />
                   <DatePicker fx:id="dpDataNasc" editable="false" GridPane.columnIndex="3" />
                   <TextField fx:id="txtCpf" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <Label alignment="TOP_RIGHT" prefHeight="17.0" prefWidth="129.0" text="Sobrenome" textAlignment="RIGHT" GridPane.columnIndex="2" GridPane.rowIndex="1">

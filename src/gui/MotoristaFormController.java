@@ -1,8 +1,14 @@
 package gui;
 
 import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
+import db.DBException;
+import gui.util.Alerts;
 import gui.util.Constraints;
 import gui.util.MaskFieldUtils;
 import gui.util.Utils;
@@ -12,12 +18,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import model.entities.Endereco;
 import model.entities.Motorista;
+import model.exceptions.ValidationException;
 import model.services.MotoristaService;
 
 public class MotoristaFormController implements Initializable{
 	
-	private Motorista motorista;
+	private Motorista entity;
 	
 	private MotoristaService service;
 	
@@ -50,7 +59,7 @@ public class MotoristaFormController implements Initializable{
 	
 //injeção de dependecia
 	public void setMotorista(Motorista motor) {
-		this.motorista = motor;
+		this.entity = motor;
 	}
 	
 	public void setMotoristaService(MotoristaService service) {
@@ -61,9 +70,34 @@ public class MotoristaFormController implements Initializable{
 	
 	@FXML
 	public void onBtnGravarAction(ActionEvent event){
-		
+		try {
+			 this.entity= getFormDataMotor();
+			//Endereco objEnd = getFormDataEnd(objMotor);
+			 this.service.saveOrUpdate(entity);
+		}catch(ValidationException e){
+			//this.setErroMenssage(e.getErrors());
+			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
+		}catch(DBException e) {
+			Alerts.showAlert("Alerta", "Erro ao Salvar Novo Modelo", e.getMessage(), AlertType.ERROR);
+		}
 	}
 	
+	private Motorista getFormDataMotor() {
+		Motorista obj = new Motorista();
+		obj.setId(Utils.tryParseToInt(txtId.getText()));
+		obj.setNome(txtNome.getText());
+		obj.setSobreNome(txtSobrenome.getText());
+			//particularidade datePicker para pegar valor do campo
+			Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
+			obj.setDataNascimento(Date.from(instant));
+		obj.setCpf(txtCpf.getText());
+		obj.setCnh(txtCnh.getText());
+		obj.setTelefone(txtTelefone.getText());
+		obj.setEmail(txtEmail.getText());
+			
+		return obj;
+	}
+
 	@FXML
 	public void onBtnCancelarAction(ActionEvent event) {
 		
