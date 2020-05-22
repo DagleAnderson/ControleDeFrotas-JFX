@@ -98,7 +98,7 @@ public class MotoristaListController implements Initializable {
 		FXMLLoader loader  = new FXMLLoader(getClass().getResource(absoluteName));
 			Pane pane =  loader.load();
 			
-			MotoristaFormController controller = new MotoristaFormController();
+			MotoristaFormController controller = loader.getController();
 				controller.setMotorista(obj);
 				controller.setMotoristaService(service);
 				
