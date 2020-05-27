@@ -39,7 +39,11 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
-			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
+				if(obj.getDataNasc() != null) {
+					st.setDate(3, new Date(obj.getDataNasc().getTime()));
+				}else {
+					st.setDate(3,null);
+				}
 			st.setString(4, obj.getCpf());
 			st.setString(5,obj.getCnh());
 			st.setString(6, obj.getTelefone());
@@ -81,7 +85,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
-			st.setDate(3, new Date(obj.getDataNascimento().getTime()));
+			st.setDate(3, new Date(obj.getDataNasc().getTime()));
 			st.setString(4, obj.getCpf());
 			st.setString(5, obj.getCnh());
 			st.setString(6, obj.getTelefone());

@@ -2,11 +2,11 @@ package gui;
 
 import java.net.URL;
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Map;
 import java.util.ResourceBundle;
-
+import java.util.Set;
 import db.DBException;
 import gui.util.Alerts;
 import gui.util.Constraints;
@@ -19,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import model.entities.Endereco;
 import model.entities.Motorista;
 import model.exceptions.ValidationException;
 import model.services.MotoristaService;
@@ -48,7 +47,7 @@ public class MotoristaFormController implements Initializable{
 	@FXML
 	private TextField txtEmail;
 
-	
+
 	
 	//buttons
 	@FXML
@@ -71,11 +70,17 @@ public class MotoristaFormController implements Initializable{
 	@FXML
 	public void onBtnGravarAction(ActionEvent event){
 		try {
+			if(this.entity == null){
+				throw new IllegalArgumentException("Entity was null");
+			}
+			if(this.service == null){
+				throw new IllegalArgumentException("Service was null");
+			}
 			 this.entity= getFormDataMotor();
 			//Endereco objEnd = getFormDataEnd(objMotor);
 			 this.service.saveOrUpdate(entity);
 		}catch(ValidationException e){
-			//this.setErroMenssage(e.getErrors());
+			this.setErroMenssage(e.getErrors());
 			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
 		}catch(DBException e) {
 			Alerts.showAlert("Alerta", "Erro ao Salvar Novo Modelo", e.getMessage(), AlertType.ERROR);
@@ -83,17 +88,33 @@ public class MotoristaFormController implements Initializable{
 	}
 	
 	private Motorista getFormDataMotor() {
+	  ValidationException exception = new ValidationException("validation error");
+		
 		Motorista obj = new Motorista();
 		obj.setId(Utils.tryParseToInt(txtId.getText()));
-		obj.setNome(txtNome.getText());
-		obj.setSobreNome(txtSobrenome.getText());
+		if(txtNome.getText() == null || txtNome.getText().trim().equals("")){exception.addError("nome","");};
+			obj.setNome(txtNome.getText());
+		
+		if(txtSobrenome.getText()==null || txtSobrenome.getText().trim().equals("")){exception.addError("sobrenome","");};
+			obj.setSobreNome(txtSobrenome.getText());
+		
 			//particularidade datePicker para pegar valor do campo
-			Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
-			obj.setDataNascimento(Date.from(instant));
-		obj.setCpf(txtCpf.getText());
-		obj.setCnh(txtCnh.getText());
-		obj.setTelefone(txtTelefone.getText());
+			if( dpDataNasc.getValue()  == null) {
+				obj.setDataNasc(null);
+			}else{
+				Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
+				obj.setDataNasc(Date.from(instant));
+			}
+		
+		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {exception.addError("cpf","");};
+			obj.setCpf(txtCpf.getText());
+			obj.setCnh(txtCnh.getText());
+			obj.setTelefone(txtTelefone.getText());
 		obj.setEmail(txtEmail.getText());
+		
+		if(exception.getErrors().size() > 0){
+			throw exception;
+		}
 			
 		return obj;
 	}
@@ -103,6 +124,21 @@ public class MotoristaFormController implements Initializable{
 		
 	}
 
+	
+	private void setErroMenssage(Map<String,String> errors) {
+		Set<String> fields = errors.keySet();
+		
+		if(fields.contains("nome")){
+			txtNome.setStyle("-fx-border-color:#f00");
+		}
+		if(fields.contains("sobrenome")){
+			txtSobrenome.setStyle("-fx-border-color:#f00");
+		}
+		if(fields.contains("cpf")){
+			txtCpf.setStyle("-fx-border-color:#f00");
+		}
+		
+	}
 		
 	public void MaskInitialize(){
 		//MaskFieldUtils.dateField((TextField) dpDataNasc);

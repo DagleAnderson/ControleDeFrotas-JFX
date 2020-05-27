@@ -6,7 +6,7 @@ import java.util.Date;
 public class Motorista implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	 private Integer id;
 	 private String nome;
 	 private String sobreNome;
 	 private Date dataNascimento;
@@ -84,14 +84,15 @@ public class Motorista implements Serializable {
 	}
 	
 	
-	public Date getDataNascimento() {
+	public Date getDataNasc() {
 		return dataNascimento;
 	}
-
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	
+	public void setDataNasc(Date dataNasc) {
+		this.dataNascimento = dataNasc;
+		
 	}
-
+	
 	public String getCpf() {
 		return cpf;
 	}
@@ -137,7 +138,7 @@ public class Motorista implements Serializable {
 		// TODO Auto-generated method stub
 		return this.getNome();
 	}
-	
-	 
+
+
 	 
 }

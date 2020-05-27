@@ -156,7 +156,11 @@ public class ModeloFormController implements Initializable {
 		Set<String> fields = errors.keySet();
 		
 		if(fields.contains("descricao")){
-			txtDesc.setStyle("-fx-border-color:#f00");;
+			txtDesc.setStyle("-fx-border-color:#f00");
+		}
+		
+		if(fields.contains("marca")){
+			txtDesc.setStyle("-fx-border-color:#f00");
 		}
 	}
 	
