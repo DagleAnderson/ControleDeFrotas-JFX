@@ -14,7 +14,6 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Cadastro">
                   <items>
-                        <MenuItem mnemonicParsing="false" text="Empresa" />
                         <MenuItem fx:id="menuItemMotorista" mnemonicParsing="false" onAction="#onMenuItemMotoristaAction" text="Motorista" />
                     <MenuItem fx:id="menuItemVeiculo" mnemonicParsing="false" onAction="#onMenuItemVeiculoAction" text="Veículo" />
                         <MenuItem fx:id="menuItemModelo" mnemonicParsing="false" onAction="#onMenuItemModeloAction" text="Modelo" />
