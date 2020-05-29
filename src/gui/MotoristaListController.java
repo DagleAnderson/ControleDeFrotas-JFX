@@ -75,12 +75,30 @@ public class MotoristaListController implements Initializable {
 		createDialogForm(obj,"/gui/MotoristaForm.fxml",parentStage);
 	}	
 	
-	public void onBtnEditarAction() {
+	public void onBtnEditarAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		Motorista obj = getSelectedMotorista();
 		
+		createDialogForm(obj, "/gui/MotoristaForm.fxml", parentStage);
 	}
 	
 	public void onBtnExcluirAction() {
 		
+	}
+	
+	
+	private Motorista getSelectedMotorista() {
+		if(service == null) {
+			throw new  IllegalStateException("Service was null");
+		}
+		if(tableViewMotorista.getSelectionModel().getSelectedItem() == null) {
+			Alerts.showAlert("Item not selected", null,"Ops! você esqueceu de selecionar um motorista!", AlertType.INFORMATION);
+		}
+		
+		Motorista obj = tableViewMotorista.getSelectionModel().getSelectedItem();
+			
+		return this.service.findById(obj);
+
 	}
 	
 	
@@ -101,6 +119,7 @@ public class MotoristaListController implements Initializable {
 			MotoristaFormController controller = loader.getController();
 				controller.setMotorista(obj);
 				controller.setMotoristaService(service);
+				controller.updateFormData();
 				
 				Stage dialogStage = new Stage();//Novo Palco 
 				dialogStage.setTitle("Dados de Motorista");//titulo da Stage

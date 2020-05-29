@@ -103,7 +103,8 @@ public class MotoristaFormController implements Initializable{
 				obj.setDataNasc(null);
 			}else{
 				Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
-				obj.setDataNasc(Date.from(instant));
+			    Date dataNasc = Date.from(instant);
+				obj.setDataNasc(dataNasc);
 			}
 		
 		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {exception.addError("cpf","");};
@@ -139,6 +140,17 @@ public class MotoristaFormController implements Initializable{
 		}
 		
 	}
+	
+
+	public void updateFormData() {
+		txtId.setText(String.valueOf(entity.getId()));
+		txtNome.setText(entity.getNome());
+		txtSobrenome.setText(entity.getSobreNome());
+		txtCpf.setText(entity.getCpf());
+		txtCnh.setText(entity.getCnh());
+		txtTelefone.setText(entity.getTelefone());
+		txtEmail.setText(entity.getEmail());	
+	}
 		
 	public void MaskInitialize(){
 		//MaskFieldUtils.dateField((TextField) dpDataNasc);
@@ -162,6 +174,7 @@ public class MotoristaFormController implements Initializable{
 		this.initializeNodes();
 		
 	}
+
 	
 	
 	

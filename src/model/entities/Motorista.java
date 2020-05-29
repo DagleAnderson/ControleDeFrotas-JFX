@@ -138,7 +138,5 @@ public class Motorista implements Serializable {
 		// TODO Auto-generated method stub
 		return this.getNome();
 	}
-
-
 	 
 }
