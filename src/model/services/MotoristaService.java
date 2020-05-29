@@ -12,14 +12,16 @@ public class MotoristaService {
 
 	public void saveOrUpdate(Motorista obj) {
 		if(obj.getId() == null) {
+			System.out.println("vou inserir...");
 			motDao.insert(obj);
 		}else {
+			System.out.println("vou atualizar...");
 			motDao.update(obj);
 		}
 	}
 	
 	public Motorista findById(Motorista obj) {
-		return null;
+		return motDao.findById(obj.getId());
 	}
 	
 	

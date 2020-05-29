@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-
 import db.DB;
 import db.DBException;
 import model.dao.MotoristaDao;
@@ -64,6 +62,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			
 		}catch (SQLException e) {
+			System.out.println("vou não deu certo inserir");
 			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
@@ -80,8 +79,9 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 		try {
 			
 			st = conn.prepareStatement("UPDATE motorista SET "
-			 + " nome_motor = ? , sobrenome_motor = ?, dataNasc_motor = ?, cpf_motor = ?, cnh_motor = ?,tel_motor = ?,email_motor"
-			 + " WHERE id_motor = ? ");
+			 + " nome_motor = ? , sobrenome_motor = ?, dataNasc_motor = ?, "+
+				" cpf_motor = ?, cnh_motor = ?,tel_motor = ?,email_motor = ? "
+			 + " WHERE id_motor = ?");
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
@@ -93,7 +93,10 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.setInt(8, obj.getId());
 			
+			st.executeUpdate();
+			
 		} catch (Exception e) {
+			System.out.println("vou não deu certo atualizar");
 			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
@@ -111,15 +114,32 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 
 	@Override
 	public Motorista findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			st = conn.prepareStatement("SELECT * FROM motorista WHERE id_motor = ?");
+			
+			st.setInt(1, id);
+			
+			rs = st.executeQuery();
+			
+			if(rs.next()){
+				Motorista obj = instanteateMotorista(rs);
+				
+				return obj;
+			}
+			
+			return null;
+			
+		} catch (SQLException e) {
+			 throw new DBException(e.getMessage()); 
+		}
+
 	}
 
 	@Override
 	public List<Motorista> findAll() {
 		try {
 			
-			st = conn.prepareStatement("SELECT mot.id_motor, mot.nome_motor,mot.tel_motor FROM motorista as mot");
+			st = conn.prepareStatement("SELECT * FROM motorista as mot");
 			
 			rs = st.executeQuery();
 			
@@ -146,8 +166,19 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			Motorista mot = new Motorista();
 			mot.setId(rs.getInt("id_motor"));
 			mot.setNome(rs.getString("nome_motor"));
+			mot.setSobreNome(rs.getString("sobrenome_motor"));
+			if(rs.getString("dataNasc_motor") != null ){
+				mot.setDataNasc(new  java.util.Date(rs.getTimestamp("dataNasc_motor").getTime()));
+			}else{
+				mot.setDataNasc(null);
+			}
+			mot.setCpf(rs.getString("cpf_motor"));
+			mot.setCnh(rs.getString("cnh_motor"));
 			mot.setTelefone(rs.getString("tel_motor"));
-		
+			mot.setEmail(rs.getString("email_motor"));
+			//mot.setEndereco(endereco);
+			
+		System.out.println(mot);
 			return mot;
 			
 			

@@ -87,10 +87,10 @@ public class Motorista implements Serializable {
 	public Date getDataNasc() {
 		return dataNascimento;
 	}
+ 
 	
 	public void setDataNasc(Date dataNasc) {
 		this.dataNascimento = dataNasc;
-		
 	}
 	
 	public String getCpf() {
@@ -136,7 +136,8 @@ public class Motorista implements Serializable {
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return this.getNome();
+		return this.getNome() +"-"+ this.getDataNasc();
 	}
+	
 	 
 }

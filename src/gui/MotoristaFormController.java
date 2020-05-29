@@ -2,11 +2,13 @@ package gui;
 
 import java.net.URL;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
+
 import db.DBException;
 import gui.util.Alerts;
 import gui.util.Constraints;
@@ -15,10 +17,10 @@ import gui.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import model.entities.Motorista;
 import model.exceptions.ValidationException;
 import model.services.MotoristaService;
@@ -83,11 +85,12 @@ public class MotoristaFormController implements Initializable{
 			this.setErroMenssage(e.getErrors());
 			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
 		}catch(DBException e) {
-			Alerts.showAlert("Alerta", "Erro ao Salvar Novo Modelo", e.getMessage(), AlertType.ERROR);
+			Alerts.showAlert("Alerta", "Erro ao gravar dados de Modelo", e.getMessage(), AlertType.ERROR);
 		}
 	}
 	
 	private Motorista getFormDataMotor() {
+		
 	  ValidationException exception = new ValidationException("validation error");
 		
 		Motorista obj = new Motorista();
@@ -104,7 +107,7 @@ public class MotoristaFormController implements Initializable{
 			}else{
 				Instant instant = Instant.from(dpDataNasc.getValue().atStartOfDay(ZoneId.systemDefault()));
 			    Date dataNasc = Date.from(instant);
-				obj.setDataNasc(dataNasc);
+			    obj.setDataNasc(dataNasc);
 			}
 		
 		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {exception.addError("cpf","");};
@@ -146,6 +149,7 @@ public class MotoristaFormController implements Initializable{
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getNome());
 		txtSobrenome.setText(entity.getSobreNome());
+		dpDataNasc.setValue(LocalDate.ofInstant(entity.getDataNasc().toInstant(), ZoneId.systemDefault()));
 		txtCpf.setText(entity.getCpf());
 		txtCnh.setText(entity.getCnh());
 		txtTelefone.setText(entity.getTelefone());
