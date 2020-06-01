@@ -3,8 +3,10 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
+import db.DBIntegrityException;
 import gui.util.Alerts;
 import gui.util.Utils;
 import javafx.collections.FXCollections;
@@ -15,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Alert.AlertType;
@@ -83,7 +86,20 @@ public class MotoristaListController implements Initializable {
 	}
 	
 	public void onBtnExcluirAction() {
+		Optional<ButtonType> result = Alerts.showConfirmation("Confirmation","Deseja confirmar essa operação?");
+		if(result.get() == ButtonType.OK) {
+			Motorista obj=getSelectedMotorista();
+			
+			if(service == null) {
+				throw new IllegalArgumentException("Service was null");
+			}
+			try {
+				this.service.remove(obj);
+			}catch (DBIntegrityException e) {
+				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
+			}
 		
+		}
 	}
 	
 	

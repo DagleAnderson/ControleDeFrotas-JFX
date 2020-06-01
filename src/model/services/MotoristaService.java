@@ -26,7 +26,7 @@ public class MotoristaService {
 	
 	
 	public void remove(Motorista obj) {
-		
+		motDao.delete(obj.getId());
 	}
 	
 	public List<Motorista> findAll(){

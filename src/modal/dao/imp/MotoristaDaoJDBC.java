@@ -95,8 +95,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.executeUpdate();
 			
-		} catch (Exception e) {
-			System.out.println("vou não deu certo atualizar");
+		} catch (SQLException e) {
 			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
@@ -108,7 +107,19 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 
 	@Override
 	public void delete(Integer id) {
-		// TODO Auto-generated method stub
+		try {
+			st = conn.prepareStatement("DELETE FROM motorista WHERE id_motor = ?");
+			
+			st.setInt(1, id);
+			
+			st.execute();
+			
+		}catch (SQLException e) {
+			throw new DBException(e.getMessage());
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
+		}
 		
 	}
 
@@ -131,6 +142,9 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 		} catch (SQLException e) {
 			 throw new DBException(e.getMessage()); 
+		}finally {
+			DB.closeResultset(rs);
+			DB.closeStatement(st);
 		}
 
 	}
