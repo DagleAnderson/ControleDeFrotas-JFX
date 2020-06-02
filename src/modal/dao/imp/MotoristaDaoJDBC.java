@@ -102,7 +102,6 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			DB.closeStatement(st);
 		}
 		
-		
 	}
 
 	@Override

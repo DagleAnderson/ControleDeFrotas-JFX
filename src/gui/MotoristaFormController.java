@@ -80,7 +80,7 @@ public class MotoristaFormController implements Initializable{
 			}
 			 this.entity= getFormDataMotor();
 			//Endereco objEnd = getFormDataEnd(objMotor);
-			 this.service.saveOrUpdate(entity);
+			 this.service.saveOrUpdate(entity,null);
 		}catch(ValidationException e){
 			this.setErroMenssage(e.getErrors());
 			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);

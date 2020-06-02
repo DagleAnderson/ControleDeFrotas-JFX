@@ -94,7 +94,7 @@ public class MotoristaListController implements Initializable {
 				throw new IllegalArgumentException("Service was null");
 			}
 			try {
-				this.service.remove(obj);
+				this.service.remove(obj,null);
 			}catch (DBIntegrityException e) {
 				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
 			}
@@ -113,7 +113,7 @@ public class MotoristaListController implements Initializable {
 		
 		Motorista obj = tableViewMotorista.getSelectionModel().getSelectedItem();
 			
-		return this.service.findById(obj);
+		return this.service.findById(obj,null);
 
 	}
 	
