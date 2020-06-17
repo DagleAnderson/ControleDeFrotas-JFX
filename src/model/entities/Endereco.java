@@ -10,7 +10,8 @@ public class Endereco implements Serializable {
 	private String uf;
 	private String bairro;
 	private String rua;
-	private int numero;
+	private String numero;
+	private String cep;
 	private String complemento;
 	
 	private Motorista motorista;
@@ -84,12 +85,20 @@ public class Endereco implements Serializable {
 		this.rua = rua;
 	}
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
+	}
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
 	}
 
 	public String getComplemento() {

@@ -21,6 +21,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import model.entities.Endereco;
 import model.entities.Motorista;
 import model.exceptions.ValidationException;
 import model.services.MotoristaService;
@@ -28,10 +29,11 @@ import model.services.MotoristaService;
 public class MotoristaFormController implements Initializable{
 	
 	private Motorista entity;
+	private Endereco entityEndereco;
 	
 	private MotoristaService service;
 	
-	//campos
+	//Referencias de Campos Motoristas
 	@FXML
 	private TextField txtId;
 	@FXML
@@ -48,7 +50,22 @@ public class MotoristaFormController implements Initializable{
 	private TextField txtTelefone;
 	@FXML
 	private TextField txtEmail;
-
+	
+	//Referencias de Campos Endereco
+	@FXML
+	private TextField txtCidade;
+	@FXML
+	private TextField txtUf;
+	@FXML
+	private TextField txtBairro;
+	@FXML
+	private TextField txtRua;
+	@FXML
+	private TextField txtNumero;
+	@FXML
+	private TextField txtCep;
+	@FXML
+	private TextField txtComplemento;
 
 	
 	//buttons
@@ -61,6 +78,7 @@ public class MotoristaFormController implements Initializable{
 //injeção de dependecia
 	public void setMotorista(Motorista motor) {
 		this.entity = motor;
+		this.entityEndereco = motor.getEndereco();
 	}
 	
 	public void setMotoristaService(MotoristaService service) {
@@ -78,9 +96,12 @@ public class MotoristaFormController implements Initializable{
 			if(this.service == null){
 				throw new IllegalArgumentException("Service was null");
 			}
-			 this.entity= getFormDataMotor();
-			//Endereco objEnd = getFormDataEnd(objMotor);
-			 this.service.saveOrUpdate(entity,null);
+			
+		     this.entityEndereco = getFormDataEnd();
+			 this.entity= getFormDataMotor(entityEndereco);
+
+
+			 this.service.saveOrUpdate(entity);
 		}catch(ValidationException e){
 			this.setErroMenssage(e.getErrors());
 			Alerts.showAlert("Alerta", "Campos obrigatórios não informados", e.getMessage(), AlertType.ERROR);
@@ -89,7 +110,8 @@ public class MotoristaFormController implements Initializable{
 		}
 	}
 	
-	private Motorista getFormDataMotor() {
+
+	private Motorista getFormDataMotor(Endereco endereco) {
 		
 	  ValidationException exception = new ValidationException("validation error");
 		
@@ -112,16 +134,50 @@ public class MotoristaFormController implements Initializable{
 		
 		if(txtCpf.getText() == null || txtCpf.getText().trim().equals("")) {exception.addError("cpf","");};
 			obj.setCpf(txtCpf.getText());
-			obj.setCnh(txtCnh.getText());
-			obj.setTelefone(txtTelefone.getText());
+		obj.setCnh(txtCnh.getText());
+		obj.setTelefone(txtTelefone.getText());
 		obj.setEmail(txtEmail.getText());
-		
+		obj.setEndereco(endereco);
 		if(exception.getErrors().size() > 0){
 			throw exception;
 		}
 			
 		return obj;
 	}
+	
+	private Endereco getFormDataEnd() {
+			Endereco end = new Endereco();				
+			if(txtCidade.getText() != null) {
+				end.setCidade(txtCidade.getText());
+				
+			}else {end.setCidade(" ");}
+			
+			if(txtUf.getText() != null) {
+				end.setUf(txtUf.getText());
+			}else {end.setUf(" ");}
+			
+			if(txtBairro.getText() != null) {
+				end.setBairro(txtBairro.getText());
+			}else {end.setBairro(" ");}
+			
+			if(txtRua.getText() != null) {
+				end.setRua(txtRua.getText());
+			}else {end.setRua(" ");}
+			if(txtCidade.getText() != null) {
+				end.setNumero(txtNumero.getText());
+			}else {end.setCidade(" ");}
+			
+			if(txtCep.getText() != null) {
+				end.setCep(txtCep.getText());
+			}else {end.setCep(" ");}
+			
+			if(txtComplemento.getText() != null) {
+				end.setComplemento(txtComplemento.getText());
+			}else {end.setComplemento(" ");}	
+				
+	return end;
+}
+
 
 	@FXML
 	public void onBtnCancelarAction(ActionEvent event) {
@@ -149,11 +205,23 @@ public class MotoristaFormController implements Initializable{
 		txtId.setText(String.valueOf(entity.getId()));
 		txtNome.setText(entity.getNome());
 		txtSobrenome.setText(entity.getSobreNome());
-		dpDataNasc.setValue(LocalDate.ofInstant(entity.getDataNasc().toInstant(), ZoneId.systemDefault()));
+		if(entity.getDataNasc() != null) {
+			dpDataNasc.setValue(LocalDate.ofInstant(entity.getDataNasc().toInstant(), ZoneId.systemDefault()));
+		}else {
+			entity.setDataNasc(null);
+		}
 		txtCpf.setText(entity.getCpf());
 		txtCnh.setText(entity.getCnh());
 		txtTelefone.setText(entity.getTelefone());
 		txtEmail.setText(entity.getEmail());	
+		
+		//Endereco
+		txtCidade.setText(entity.getEndereco().getCidade());
+		txtBairro.setText(entity.getEndereco().getBairro());
+		txtRua.setText(entity.getEndereco().getRua());
+		txtNumero.setText(entity.getEndereco().getNumero());
+		txtCep.setText(entity.getEndereco().getCep());
+		txtComplemento.setText(entity.getEndereco().getComplemento());
 	}
 		
 	public void MaskInitialize(){

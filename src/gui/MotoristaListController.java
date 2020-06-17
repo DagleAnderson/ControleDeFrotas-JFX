@@ -25,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.entities.Endereco;
 import model.entities.Motorista;
 import model.services.MotoristaService;
 
@@ -32,9 +33,10 @@ public class MotoristaListController implements Initializable {
 
 	//Injeção de dependência
 	private MotoristaService service;
+
 	
 	
-	//Referencias de Tabelas e Colunas 
+	//Referencias de Tabelas e Colunas Motorista 
 		
 	@FXML
 	private TableView<Motorista> tableViewMotorista;
@@ -73,7 +75,10 @@ public class MotoristaListController implements Initializable {
 	
 	public void onBtnNovoAction(ActionEvent event){
 		Stage parentStage = Utils.currentStage(event);
+		Endereco endereco = new Endereco();
 		Motorista obj = new Motorista();
+		obj.setEndereco(endereco);
+		
 		
 		createDialogForm(obj,"/gui/MotoristaForm.fxml",parentStage);
 	}	
@@ -94,7 +99,7 @@ public class MotoristaListController implements Initializable {
 				throw new IllegalArgumentException("Service was null");
 			}
 			try {
-				this.service.remove(obj,null);
+				this.service.remove(obj);
 			}catch (DBIntegrityException e) {
 				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
 			}
@@ -113,7 +118,7 @@ public class MotoristaListController implements Initializable {
 		
 		Motorista obj = tableViewMotorista.getSelectionModel().getSelectedItem();
 			
-		return this.service.findById(obj,null);
+		return this.service.findById(obj);
 
 	}
 	

@@ -18,18 +18,23 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 
 	Connection conn;
 	
+	
 	 private PreparedStatement  st = null;
 	 private ResultSet rs = null;
 	
 	
 	public MotoristaDaoJDBC(Connection connection) {
 		this.conn = connection;
+	try {
+		this.conn.setAutoCommit(false);
+		
+	}catch(SQLException e) {
+		throw new DBException("commit:" + e.getMessage());
+	}
 	}
 
 	@Override
-	public void insert(Motorista obj) {
-	
-		
+	public void insert(Motorista obj) {	
 		try {
 			st = conn.prepareStatement("INSERT INTO "
 			+ " motorista(nome_motor,sobrenome_motor,dataNasc_motor,cpf_motor,cnh_motor,tel_motor,email_motor)"
@@ -51,18 +56,55 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			int rowsAffected = st.executeUpdate();
 			
-			if(rowsAffected>0) {
-				rs = st.getGeneratedKeys();
-			}
-			if(rs.next()) {
-				int id = rs.getInt(1);
+			if(rowsAffected > 0) {
+				rs = st.getGeneratedKeys();	
+				if(rs.next()) {
+					int id = rs.getInt(1);
+				
+					obj.setId(id);
+				}
+				
+					DB.closeResultset(rs);
+					DB.closeStatement(st);
+					
+					st = conn.prepareStatement("INSERT INTO endereco_motorista(cidade_end,uf_end,bairro_end,rua_end,numero_end,cep_end,comp_end,id_motorista_end)"
+							+ " VALUES(?,?,?,?,?,?,?,?)" ,Statement.RETURN_GENERATED_KEYS);
+					
+					st.setString(1, obj.getEndereco().getCidade());
+					st.setString(2, obj.getEndereco().getUf());
+					st.setString(3, obj.getEndereco().getBairro());
+					st.setString(4, obj.getEndereco().getRua());
+					st.setString(5, obj.getEndereco().getNumero());
+					st.setString(6, obj.getEndereco().getCep());
+					st.setString(7, obj.getEndereco().getComplemento());
+					
+					st.setInt(8,obj.getId());
+					
+					int rowsAffectedEnd = st.executeUpdate();
+					
+					if(rowsAffectedEnd> 0 ) {
+				 		rs = st.getGeneratedKeys();
+				 		if(rs.next()) {
+				 			int id = rs.getInt(1);
+				 			
+				 			obj.getEndereco().setId(id);
+				 		} 
+				 		
+					conn.commit();	
+				 	
+					}else {
+						conn.rollback();
+				 		throw new DBException("Erro inesperado! Nenhum linha de endereço foi afetada");
+				 	}
+					
+	
+		}else {
+			conn.rollback();
+			throw new DBException("Erro inesperado! Nenhum linha de endereço foi afetada");
 			
-				obj.setId(id);
-			}
-			
-			
-		}catch (SQLException e) {
-			System.out.println("vou não deu certo inserir");
+		}
+		
+		}catch (SQLException e) {		
 			throw new DBException( e.getMessage());
 		}finally {
 			DB.closeResultset(rs);
