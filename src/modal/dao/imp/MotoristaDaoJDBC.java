@@ -11,6 +11,7 @@ import java.util.List;
 import db.DB;
 import db.DBException;
 import model.dao.MotoristaDao;
+import model.entities.Endereco;
 import model.entities.Motorista;
 
 
@@ -127,7 +128,11 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.setString(1, obj.getNome());
 			st.setString(2, obj.getSobreNome());
-			st.setDate(3, new Date(obj.getDataNasc().getTime()));
+			if(obj.getDataNasc() != null) {
+				st.setDate(3, new Date(obj.getDataNasc().getTime()));
+			}else {
+				st.setDate(3,null);
+			}
 			st.setString(4, obj.getCpf());
 			st.setString(5, obj.getCnh());
 			st.setString(6, obj.getTelefone());
@@ -167,7 +172,8 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 	@Override
 	public Motorista findById(Integer id) {
 		try {
-			st = conn.prepareStatement("SELECT * FROM motorista WHERE id_motor = ?");
+			st = conn.prepareStatement("SELECT * FROM motorista as motor INNER JOIN"
+					+ " endereco_motorista as end ON motor.id_motor = end.id_motorista_end WHERE motor.id_motor= ?");
 			
 			st.setInt(1, id);
 			
@@ -194,8 +200,8 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 	public List<Motorista> findAll() {
 		try {
 			
-			st = conn.prepareStatement("SELECT * FROM motorista as mot");
-			
+			st = conn.prepareStatement("SELECT * FROM motorista as motor INNER JOIN" + 
+								"  endereco_motorista as end ON motor.id_motor = end.id_motorista_end");
 			rs = st.executeQuery();
 			
 			List<Motorista> motoristas = new ArrayList<>();
@@ -231,9 +237,19 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			mot.setCnh(rs.getString("cnh_motor"));
 			mot.setTelefone(rs.getString("tel_motor"));
 			mot.setEmail(rs.getString("email_motor"));
-			//mot.setEndereco(endereco);
 			
-		System.out.println(mot);
+				//endereco
+				Endereco endereco = new Endereco();
+				endereco.setCidade(rs.getString("cidade_end"));
+				endereco.setUf(rs.getString("uf_end"));
+				endereco.setBairro(rs.getString("bairro_end"));
+				endereco.setRua(rs.getString("rua_end"));
+				endereco.setNumero(rs.getNString("numero_end"));
+				endereco.setCep(rs.getString("cep_end"));
+				endereco.setComplemento(rs.getString("comp_end"));
+				
+			mot.setEndereco(endereco);	
+			
 			return mot;
 			
 			

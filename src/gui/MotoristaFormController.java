@@ -217,6 +217,7 @@ public class MotoristaFormController implements Initializable{
 		
 		//Endereco
 		txtCidade.setText(entity.getEndereco().getCidade());
+		txtUf.setText(entity.getEndereco().getUf());
 		txtBairro.setText(entity.getEndereco().getBairro());
 		txtRua.setText(entity.getEndereco().getRua());
 		txtNumero.setText(entity.getEndereco().getNumero());
