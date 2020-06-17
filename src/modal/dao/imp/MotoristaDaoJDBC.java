@@ -101,7 +101,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 	
 		}else {
 			conn.rollback();
-			throw new DBException("Erro inesperado! Nenhum linha de endereço foi afetada");
+			throw new DBException("Erro inesperado! Nenhum linha foi afetada");
 			
 		}
 		
@@ -140,8 +140,33 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 			
 			st.setInt(8, obj.getId());
 			
-			st.executeUpdate();
+			int effected = st.executeUpdate();
 			
+			if(effected > 0) {
+					DB.closeResultset(rs);
+					DB.closeStatement(st);
+					
+					st = conn.prepareStatement("UPDATE endereco_motorista SET "
+							+ "cidade_end = ?,uf_end = ?,bairro_end = ?, rua_end = ?, numero_end = ?,"
+							+ "cep_end = ?, comp_end = ?  WHERE  id_motorista_end = ?");
+					
+					st.setString(1, obj.getEndereco().getCidade());
+					st.setString(2, obj.getEndereco().getUf());
+					st.setString(3, obj.getEndereco().getBairro());
+					st.setString(4, obj.getEndereco().getRua());
+					st.setString(5, obj.getEndereco().getNumero());
+					st.setString(6, obj.getEndereco().getCep());
+					st.setString(7, obj.getEndereco().getComplemento());
+					
+					st.setInt(8, obj.getId());
+					
+					st.executeUpdate();
+					
+					conn.commit();
+			}else {
+				conn.rollback();
+				throw new DBException("Erro inesperado! Nenhum linha foi afetada");
+			}
 		} catch (SQLException e) {
 			throw new DBException( e.getMessage());
 		}finally {
@@ -173,7 +198,7 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 	public Motorista findById(Integer id) {
 		try {
 			st = conn.prepareStatement("SELECT * FROM motorista as motor INNER JOIN"
-					+ " endereco_motorista as end ON motor.id_motor = end.id_motorista_end WHERE motor.id_motor= ?");
+					+ " endereco_motorista as end ON motor.id_motor = end.id_motorista_end WHERE motor.id_motor = ?");
 			
 			st.setInt(1, id);
 			
