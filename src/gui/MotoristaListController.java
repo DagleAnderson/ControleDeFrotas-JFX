@@ -100,6 +100,7 @@ public class MotoristaListController implements Initializable {
 			}
 			try {
 				this.service.remove(obj);
+				this.updateTableView();
 			}catch (DBIntegrityException e) {
 				 Alerts.showAlert("Erro ao remover objeto", null, e.getMessage(), AlertType.ERROR);
 			}

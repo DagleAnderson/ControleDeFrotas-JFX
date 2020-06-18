@@ -179,12 +179,32 @@ public class MotoristaDaoJDBC implements MotoristaDao {
 	@Override
 	public void delete(Integer id) {
 		try {
-			st = conn.prepareStatement("DELETE FROM motorista WHERE id_motor = ?");
+			
+			st = conn.prepareStatement("DELETE FROM endereco_motorista WHERE  id_motorista_end = ?");
 			
 			st.setInt(1, id);
 			
-			st.execute();
+			boolean status = st.execute();
 			
+			System.out.println();
+				
+			if(status == false) {
+				DB.closeResultset(rs);
+				DB.closeStatement(st);
+				
+				st = conn.prepareStatement("DELETE FROM motorista WHERE id_motor = ?");
+				
+				st.setInt(1, id);
+				
+				st.execute();
+				
+			 	conn.commit();
+			
+			}else {
+				conn.rollback();
+				throw new DBException("Erro inesperado! Nenhum linha foi afetada");
+			}
+				
 		}catch (SQLException e) {
 			throw new DBException(e.getMessage());
 		}finally {
