@@ -8,8 +8,9 @@ import modal.dao.imp.MarcaDaoJDBC;
 import modal.dao.imp.ModeloDaoJDBC;
 import modal.dao.imp.MotoristaDaoJDBC;
 import modal.dao.imp.VeiculoDaoJDBC;
+import modal.dao.imp.ViagemDaoJDBC;
 
-public class DaoFactory { // Fábrica de instanciação DAO
+public class DaoFactory { // Fábrica de injeção de dependencia DAO
 
 	private static final Connection conn = DB.getConnection();
 
@@ -28,4 +29,10 @@ public class DaoFactory { // Fábrica de instanciação DAO
 	public static MotoristaDao createMotoristaDao() {
 		return new MotoristaDaoJDBC(conn);
 	}
+	
+	public static ViagemDao createViagemDao(){
+		return new ViagemDaoJDBC();
+	}
+	
+	
 }

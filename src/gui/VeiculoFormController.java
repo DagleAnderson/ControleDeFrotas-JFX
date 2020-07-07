@@ -206,7 +206,7 @@ public class VeiculoFormController implements Initializable {
 			txtId.setText(String.valueOf(entity.getId()));
 			txtDescricao.setText(entity.getDescricao());
 			cbxModelo.setValue(entity.getModelo());
-			txtMarca.setText(entity.getModelo().getMarca().getDescricao());
+			if(entity.getModelo() != null) {txtMarca.setText(entity.getModelo().getMarca().getDescricao());}
 			txtAno.setText(entity.getAno());
 			txtKmRodado.setText(String.valueOf(entity.getKmRodado()));
 			txtPlaca.setText(entity.getPlaca());

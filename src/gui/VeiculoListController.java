@@ -139,7 +139,7 @@ public class VeiculoListController implements Initializable,DataChangeListener {
 			obsList = FXCollections.observableArrayList(list);
 			
 			tableViewVeiculo.setItems(obsList);
-		
+			tableViewVeiculo.refresh();
 	}
 	
 	//pegar veiculo selecionado

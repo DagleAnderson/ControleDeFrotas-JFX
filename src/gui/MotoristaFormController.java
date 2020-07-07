@@ -111,6 +111,12 @@ public class MotoristaFormController implements Initializable{
 	}
 	
 
+	@FXML
+	public void onBtnCancelarAction(ActionEvent event) {
+		Utils.currentStage(event).close();
+	}
+
+
 	private Motorista getFormDataMotor(Endereco endereco) {
 		
 	  ValidationException exception = new ValidationException("validation error");
@@ -178,11 +184,6 @@ public class MotoristaFormController implements Initializable{
 	return end;
 }
 
-
-	@FXML
-	public void onBtnCancelarAction(ActionEvent event) {
-		
-	}
 
 	
 	private void setErroMenssage(Map<String,String> errors) {

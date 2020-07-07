@@ -142,6 +142,7 @@ public class MotoristaListController implements Initializable {
 				controller.setMotorista(obj);
 				controller.setMotoristaService(service);
 				controller.updateFormData();
+		
 				
 				Stage dialogStage = new Stage();//Novo Palco 
 				dialogStage.setTitle("Dados de Motorista");//titulo da Stage
@@ -157,7 +158,6 @@ public class MotoristaListController implements Initializable {
 			
 		
 	}
-
 	
 	public void initializeNodes(){
 		tableColumnId.setCellValueFactory(new PropertyValueFactory<>("id"));
